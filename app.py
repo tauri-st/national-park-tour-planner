@@ -9,6 +9,13 @@ from langchain_core.prompts import PromptTemplate
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
 
+# Write a prompt template
+# First we temporarily use placeholders,
+# but this will eventually accept user form data
+def build_new_trip_prompt():
+   #Instantiate the class
+   prompt_template = PromptTemplate.from_template()
+
 # Initialize the Flask application
 app = Flask(__name__)
 
