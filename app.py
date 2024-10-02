@@ -26,8 +26,13 @@ def plan_trip():
 def view_trip():
   #log the request form object
   log.info(request.form)
+  #create comma seperated lists for all prompts with multi-select to collect all values
+  #this is based on the "name" property in the form inputs in plan-trip.html
+  traveling_with_list = ",".join(request.form.getlist("traveling-with"))
+  lodging_list = ", ".join(request.form.getlist("lodging"))
+  adventure_list = ", ".join(request.form.getlist("adventure"))
   return render_template("view-trip.html")
     
 # Run the flask server
-if __name__ == "__main__":
+if __name__ == "__main__":#
     app.run()
