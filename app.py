@@ -41,6 +41,7 @@ def view_trip():
         "adventure_list": adventure_list,
         "trip_name": request.form["trip-name"]
   }
+  # log.info(cleaned_form_data)
   return render_template("view-trip.html")
     
 # Run the flask server
