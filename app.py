@@ -24,6 +24,8 @@ def plan_trip():
 # Define the route for view trip page with the generated trip itinerary
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
+  #log the request form object
+  log.info(request.form)
   return render_template("view-trip.html")
     
 # Run the flask server
