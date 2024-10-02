@@ -14,7 +14,9 @@ log = logging.getLogger("app")
 # but this will eventually accept user form data
 def build_new_trip_prompt():
    #Instantiate the class
-   prompt_template = PromptTemplate.from_template()
+   prompt_template = PromptTemplate.from_template(
+       "Create a trip for me by the name of {trip_name}. It will be to {location} between the dates of {trip_start} and {trip_end}. I will be traveling with {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}"                                          
+  )
 
 # Initialize the Flask application
 app = Flask(__name__)
