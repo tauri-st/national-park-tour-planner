@@ -17,6 +17,15 @@ def build_new_trip_prompt(form_data):
    prompt_template = PromptTemplate.from_template(
        "Create a trip for me by the name of {trip_name}. It will be to {location} between the dates of {trip_start} and {trip_end}. I will be traveling with {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}"                                          
   )
+   #formate the prompt template
+   return prompt_template.format(
+      location = form_data["location"],
+      trip_start = form_data["trip_start"],
+      trip_end = form_data["trip_end"],
+      traveling_with_list = form_data["traveling_with_list"],
+      lodging_list = form_data["lodging_list"],
+      adventure_list = form_data["adventure_list"]
+   )
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -51,7 +60,9 @@ def view_trip():
         "adventure_list": adventure_list,
         "trip_name": request.form["trip-name"]
   }
-  # log.info(cleaned_form_data)
+  #log.info(cleaned_form_data)
+  prompt = build_new_trip_prompt(cleaned_form_data)
+  log.info(prompt)
   return render_template("view-trip.html")
     
 # Run the flask server
