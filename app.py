@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import logging
 from datetime import datetime
+from langchain_core.prompts import PromptTemplate
 
 # app will run at: http://127.0.0.1:5000/
 
