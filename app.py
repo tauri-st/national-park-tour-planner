@@ -24,13 +24,23 @@ def plan_trip():
 # Define the route for view trip page with the generated trip itinerary
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
-  #log the request form object
+  # log the request form object
   log.info(request.form)
-  #create comma seperated lists for all prompts with multi-select to collect all values
-  #this is based on the "name" property in the form inputs in plan-trip.html
+  # create comma seperated lists for all prompts with multi-select to collect all values
+  # this is based on the "name" property in the form inputs in plan-trip.html
   traveling_with_list = ",".join(request.form.getlist("traveling-with"))
   lodging_list = ", ".join(request.form.getlist("lodging"))
   adventure_list = ", ".join(request.form.getlist("adventure"))
+  # create a dictionary containing cleaned form data
+  cleaned_form_data = {
+        "location": request.form["location-search"],
+        "trip_start": request.form["trip-start"],
+        "trip_end": request.form["trip-end"],
+        "traveling_with_list": traveling_with_list,
+        "lodging_list": lodging_list,
+        "adventure_list": adventure_list,
+        "trip_name": request.form["trip-name"]
+  }
   return render_template("view-trip.html")
     
 # Run the flask server
