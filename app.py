@@ -19,13 +19,13 @@ def build_new_trip_prompt(form_data):
       {
          "prompt":
         """
-        Create a trip for me to Yosemite National Park between the dates of 2024-10-07 and 2024-10-11. I will be traveling solo. I prefer housing in the form of campsites. I prefer these types of adventures: hiking, swimming
+        Create a trip for me to Yosemite National Park between the dates of 2024-10-07 and 2024-10-09. I will be traveling solo. I prefer housing in the form of campsites. I prefer these types of adventures: hiking, swimming. Create a daily itinerary for this trip using this information.
         """
       }
    ]
    #Instantiate the class
    prompt_template = PromptTemplate.from_template(
-       "Create a trip for me to {location} between the dates of {trip_start} and {trip_end}. I will be traveling {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}"                                          
+       "Create a trip for me to {location} between the dates of {trip_start} and {trip_end}. I will be traveling {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}. Create a daily itinerary for this trip using this information."                                          
   )
    #formate the prompt template
    return prompt_template.format(
