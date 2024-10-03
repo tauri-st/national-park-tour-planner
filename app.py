@@ -17,11 +17,28 @@ def build_new_trip_prompt(form_data):
    #declare example dictionary to convert to "few-shot" prompting
    examples = [
       {
-         "prompt":
+        "prompt":
         """
         Create a trip for me to Yosemite National Park between the dates of 2024-10-07 and 2024-10-09. I will be traveling solo. I prefer housing in the form of campsites. I prefer these types of adventures: hiking, swimming. Create a daily itinerary for this trip using this information.
+        """,
+        "response":
         """
-      }
+        Day 1: May 23, 2024 (Thursday)
+        Morning: Arrive at Yosemite National Park
+        Afternoon: Set up campsite at North Pines Campground
+        Evening: Explore the campground and have a family campfire dinner
+ 
+        Day 2: May 24, 2024 (Friday)
+        Morning: Guided tour of Yosemite Valley (includes stops at El Capitan, Bridalveil Fall, Half Dome)
+        Afternoon: Picnic lunch in the Valley
+        Evening: Relax at the campsite, storytelling around the campfire
+ 
+        Day 3: May 25, 2024 (Saturday)
+        Morning: Hike to Mirror Lake (easy hike, great for kids)
+        Afternoon: Swimming at Mirror Lake
+        Evening: Dinner at the campsite, stargazing
+        """
+      },
    ]
    #Instantiate the class
    prompt_template = PromptTemplate.from_template(
