@@ -110,9 +110,9 @@ def build_new_trip_prompt(form_data):
   )
 
   #* Call format on the few_shot_prompt
-  few_shot_prompt.format(
+  log.info(few_shot_prompt.format(
      input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information."
-  )
+  ))
 
   #Instantiate the class
   prompt_template = PromptTemplate.from_template(
