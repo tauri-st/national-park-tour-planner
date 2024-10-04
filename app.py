@@ -39,6 +39,16 @@ def build_new_trip_prompt(form_data):
         Evening: Dinner at the campsite, stargazing
         """
       },
+      {
+        "prompt":
+        """
+        Create a trip for me to Grand Canyon National Park between the dates of 2024-10-07 and 2024-10-09. I will be traveling in a group. I prefer housing in the form of hotels, lodges. I prefer these types of adventures: tours, climbing. Create a daily itinerary for this trip using this information.
+        """,
+        "response":
+        """
+        
+        """
+      }
    ]
    #Instantiate the class
    prompt_template = PromptTemplate.from_template(
