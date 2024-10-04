@@ -110,22 +110,8 @@ def build_new_trip_prompt(form_data):
   )
 
   #* Call format on the few_shot_prompt
-  log.info(few_shot_prompt.format(
+  return few_shot_prompt.format(
      input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information."
-  ))
-
-  #Instantiate the class
-  prompt_template = PromptTemplate.from_template(
-    "Create a trip for me to {location} between the dates of {trip_start} and {trip_end}. I will be traveling {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}. Create a daily itinerary for this trip using this information."                                          
-  )
-    #formate the prompt template
-  return prompt_template.format(
-    location = form_data["location"],
-    trip_start = form_data["trip_start"],
-    trip_end = form_data["trip_end"],
-    traveling_with_list = form_data["traveling_with_list"],
-    lodging_list = form_data["lodging_list"],
-    adventure_list = form_data["adventure_list"]
   )
 
 # Initialize the Flask application
