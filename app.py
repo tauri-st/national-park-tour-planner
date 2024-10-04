@@ -7,6 +7,9 @@ from langchain_openai import OpenAI
 
 # app will run at: http://127.0.0.1:5000/
 
+#* Create instance of OpenAI class
+llm = OpenAI()
+
 # Initialize logging
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
@@ -150,6 +153,10 @@ def view_trip():
   }
   #log.info(cleaned_form_data)
   prompt = build_new_trip_prompt(cleaned_form_data)
+  #* Make a call to OpenAI, send your new prompt with examples to the model
+  response = llm.invoke(prompt)
+  #* Log response from the model
+  log.info(response)
   log.info(prompt)
   return render_template("view-trip.html")
     
