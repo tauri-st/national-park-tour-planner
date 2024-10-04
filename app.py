@@ -10,11 +10,11 @@ from langchain_core.prompts import PromptTemplate
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
 
-# Write a prompt template
+#* Write a prompt template
 # First we temporarily use placeholders,
 # but this will eventually accept user form data
 def build_new_trip_prompt(form_data):
-  #declare example dictionary to convert to "few-shot" prompting
+  #* Declare example dictionary to convert to "few-shot" prompting
   examples = [
     {
       "prompt":
@@ -87,7 +87,7 @@ def build_new_trip_prompt(form_data):
     }
   ]
 
-  # Create a prompt template that defines the structure of the response
+  #* Create a prompt template that defines the structure of the response
   example_prompt = PromptTemplate.from_template(
     template =
     """
@@ -95,7 +95,25 @@ def build_new_trip_prompt(form_data):
     """
   )
   #use one of the examples to log the output
-  log.info(example_prompt.format(**examples[0]))
+  #log.info(example_prompt.format(**examples[0]))
+  
+  #* Create few-shot prompt template:
+  few_shot_prompt = FewShotPromptTemplate(
+    examples = examples,
+    example_prompt = example_prompt,
+    #set to the real prompt with the user's form data included
+    #it will be appnded to the end of all the example prompts to give the model context
+    suffix = "{input}",
+    #set to inputs that will be assigned values when .format() is called
+    #this input passes in the real prompt with the user's form data included
+    input_variables = ["input"],
+  )
+
+  #* Call format on the few_shot_prompt
+  few_shot_prompt.format(
+     input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information."
+  )
+
   #Instantiate the class
   prompt_template = PromptTemplate.from_template(
     "Create a trip for me to {location} between the dates of {trip_start} and {trip_end}. I will be traveling {traveling_with_list}. I prefer housing in the form of {lodging_list}. I prefer these types of adventures: {adventure_list}. Create a daily itinerary for this trip using this information."                                          
