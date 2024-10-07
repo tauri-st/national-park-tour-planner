@@ -19,6 +19,7 @@ log = logging.getLogger("app")
 # but this will eventually accept user form data
 def build_new_trip_prompt(form_data):
   #* Declare example dictionary to convert to "few-shot" prompting
+  #response has to be in JSON format so that we can interact with the values and in this case display the data on the page
   examples = [
     {
       "prompt":
@@ -27,20 +28,7 @@ def build_new_trip_prompt(form_data):
       """,
       "response":
       """
-      Day 1: May 23, 2024 (Thursday)
-      Morning: Arrive at Yosemite National Park
-      Afternoon: Set up campsite at North Pines Campground
-      Evening: Explore the campground and have a family campfire dinner
- 
-      Day 2: May 24, 2024 (Friday)
-      Morning: Guided tour of Yosemite Valley (includes stops at El Capitan, Bridalveil Fall, Half Dome)
-      Afternoon: Picnic lunch in the Valley
-      Evening: Relax at the campsite, storytelling around the campfire
- 
-      Day 3: May 25, 2024 (Saturday)
-      Morning: Hike to Mirror Lake (easy hike)
-      Afternoon: Swimming at Mirror Lake
-      Evening: Dinner at the campsite, stargazing
+      {"trip_name":"My awesome trip to Yosemite 2024 woohoooo","location":"Yosemite National Park","trip_start":"2024-10-07","trip_end":"2024-10-09","num_days":"3","traveling_with":"solo","lodging":"campsites","adventure":"hiking, swimming","itinerary":[{"day":"1","date":"2024-10-07","morning":"Arrive at Yosemite National Park","afternoon":"Set up campsite at North Pines Campground","evening":"Explore the campground and have a family campfire dinner"},{"day":"2","date":"2024-10-08","morning":"Guided tour of Yosemite Valley (includes stops at El Capitan, Bridalveil Fall, Half Dome)","afternoon":"Picnic lunch in the Valley","evening":"Relax at the campsite, storytelling around the campfire"},{"day":"3","date":"2024-10-09","morning":"Hike to Mirror Lake (easy hike)","afternoon":"Swimming at Mirror Lake","evening":"Dinner at the campsite, stargazing"}]}
       """
     },
     {
