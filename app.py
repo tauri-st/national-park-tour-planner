@@ -48,20 +48,7 @@ def build_new_trip_prompt(form_data):
       """,
       "response":
       """
-      Day 1: October 10, 2024 (Thursday)
-      Morning: Arrive at Cleveland National Forest. Check in at a cozy bed & breakfast in or around Julian (e.g., Pine Hills Lodge or Julian Lodge).
-      Afternoon: Explore the scenic Santa Ysabel Preserve for a family-friendly hike. The West Preserve offers a 3.5-mile loop that’s great for kids with wide trails and gentle slopes.
-      Evening: Return to the bed & breakfast. Enjoy a homemade dinner at the B&B or a meal at a local restaurant in Julian (ex. Jeremy's on the Hill, a farm-to-table restaurant in Julian). Finish the evening with a relaxing stroll around town.
-
-      Day 2: October 11, 2024 (Friday)
-      Morning: Cycle the Sunrise Highway, a scenic cycling route with stunning views of the forest and surrounding mountains. Opt for a family-friendly section from Pine Valley to Laguna Mountain, which has smoother paths suitable for kids.
-      Afternoon: Pack a picnic lunch and stop at Laguna Mountain Recreation Area. Afterward, explore the Big Laguna Trail with a short family hike to the lake, enjoying the serene views.
-      Evening: Head back to your bed & breakfast for some downtime. Enjoy a casual family dinner in Julian (ex. The Julian Grille), perhaps trying a famous Julian apple pie for dessert.
-
-      Day 3: October 12, 2024 (Saturday)
-      Morning: Hike Cuyamaca Peak via the Lookout Fire Road trail. It’s a moderate trail, but the views from the top make it a great reward for the whole family.
-      Afternoon: Have lunch at a restaurant in Julian (ex. Romano's Restaurant). Explore the town, visit the local shops, or stop by the Julian Mining Company for a fun family activity like gem mining.
-      Evening: Depart Cleveland National Forest and head back home, or enjoy a final relaxing evening in Julian before wrapping up your trip.
+      {{"trip_name":"My romantic trip to Cleveland National Forest","location":"Cleveland National Forest","trip_start":"2024-10-10","trip_end":"2024-10-12","num_days":"3","traveling_with":"with a partner, with kids","lodging":"hotels, lodges","adventure":"hiking, swimming","itinerary":[{{"day":"1","date":"2024-10-10","activities":["Arrive at Cleveland National Forest. Check in at a cozy bed & breakfast in or around Julian (e.g., Pine Hills Lodge or Julian Lodge).","Explore the scenic Santa Ysabel Preserve for a family-friendly hike. The West Preserve offers a 3.5-mile loop that’s great for kids with wide trails and gentle slopes.","Return to the bed & breakfast. Enjoy a homemade dinner at the B&B or a meal at a local restaurant in Julian (ex. Jeremy's on the Hill, a farm-to-table restaurant in Julian). Finish the evening with a relaxing stroll around town."]}},{{"day":"2","date":"2024-10-11","activities":["Cycle the Sunrise Highway, a scenic cycling route with stunning views of the forest and surrounding mountains. Opt for a family-friendly section from Pine Valley to Laguna Mountain, which has smoother paths suitable for kids.","Pack a picnic lunch and stop at Laguna Mountain Recreation Area. Afterward, explore the Big Laguna Trail with a short family hike to the lake, enjoying the serene views.","Head back to your bed & breakfast for some downtime. Enjoy a casual family dinner in Julian (ex. The Julian Grille), perhaps trying a famous Julian apple pie for dessert."]}},{{"day":"3","date":"2024-10-12","activities":["Hike Cuyamaca Peak via the Lookout Fire Road trail. It’s a moderate trail, but the views from the top make it a great reward for the whole family.","Have lunch at a restaurant in Julian (ex. Romano's Restaurant). Explore the town, visit the local shops, or stop by the Julian Mining Company for a fun family activity like gem mining.","Depart Cleveland National Forest and head back home, or enjoy a final relaxing evening in Julian before wrapping up your trip."]}}]}}
       """
     }
   ]
