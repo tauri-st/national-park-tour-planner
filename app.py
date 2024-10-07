@@ -38,7 +38,7 @@ def build_new_trip_prompt(form_data):
       Evening: Relax at the campsite, storytelling around the campfire
  
       Day 3: May 25, 2024 (Saturday)
-      Morning: Hike to Mirror Lake (easy hike, great for kids)
+      Morning: Hike to Mirror Lake (easy hike)
       Afternoon: Swimming at Mirror Lake
       Evening: Dinner at the campsite, stargazing
       """
