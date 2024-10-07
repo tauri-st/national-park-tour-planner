@@ -28,7 +28,7 @@ def build_new_trip_prompt(form_data):
       """,
       "response":
       """
-      {"trip_name":"My awesome trip to Yosemite 2024 woohoooo","location":"Yosemite National Park","trip_start":"2024-10-07","trip_end":"2024-10-09","num_days":"3","traveling_with":"solo","lodging":"campsites","adventure":"hiking, swimming","itinerary":[{"day":"1","date":"2024-10-07","morning":"Arrive at Yosemite National Park","afternoon":"Set up campsite at North Pines Campground","evening":"Explore the campground and have a family campfire dinner"},{"day":"2","date":"2024-10-08","morning":"Guided tour of Yosemite Valley (includes stops at El Capitan, Bridalveil Fall, Half Dome)","afternoon":"Picnic lunch in the Valley","evening":"Relax at the campsite, storytelling around the campfire"},{"day":"3","date":"2024-10-09","morning":"Hike to Mirror Lake (easy hike)","afternoon":"Swimming at Mirror Lake","evening":"Dinner at the campsite, stargazing"}]}
+      {{"trip_name":"My awesome trip to Yosemite 2024 woohoooo","location":"Yosemite National Park","trip_start":"2024-10-07","trip_end":"2024-10-09","num_days":"3","traveling_with":"solo","lodging":"campsites","adventure":"hiking, swimming","itinerary":[{{"day":"1","date":"2024-10-07","activites":["Arrive at Yosemite National Park","Set up campsite at North Pines Campground","Explore the campground and have a family campfire dinner"]}},{{"day":"2","date":"2024-10-08","activities":["Guided tour of Yosemite Valley (includes stops at El Capitan, Bridalveil Fall, Half Dome)","Picnic lunch in the Valley","Relax at the campsite, storytelling around the campfire"]}},{{"day":"3","date":"2024-10-09","activities":["Hike to Mirror Lake (easy hike)","Swimming at Mirror Lake","Dinner at the campsite, stargazing"]}}]}}
       """
     },
     {
@@ -38,20 +38,7 @@ def build_new_trip_prompt(form_data):
       """,
       "response":
       """
-      Day 1: October 7, 2024 (Monday)
-      Morning: Arrive at Grand Canyon National Park, check into your lodge (e.g., El Tovar Hotel or Bright Angel Lodge)
-      Afternoon: Guided South Rim bus tour (stops at Desert View Watchtower, Yavapai Point, and Grandview Point)
-      Evening: Enjoy a sunset view from Mather Point and dinner at the lodge restaurant
-        
-      Day 2: October 8, 2024 (Tuesday)
-      Morning: Guided hike/climbing experience at Grand Canyon's Rim-to-Rim trail (shorter section, suitable for a day's climb)
-      Afternoon: Scenic lunch at a viewpoint along the South Rim trail
-      Evening: Attend a ranger-led stargazing session (if available) or relax at the lodge with evening drinks by the fire
-
-      Day 3: October 9, 2024 (Wednesday)
-      Morning: Helicopter tour over the Grand Canyon for breathtaking aerial views
-      Afternoon: Lunch at Grand Canyon Village, last-minute shopping for souvenirs
-      Evening: Depart from Grand Canyon National Park
+      {{"trip_name":"My awesome trip to the Grand Canyon ooooohhhh","location":"Grand Canyon National Park","trip_start":"2024-05-23","trip_end":"2024-05-25","num_days":"3","traveling_with":"in a group","lodging":"hotels, lodges","adventure":"tours, climbing","itinerary":[{{"day":"1","date":"2024-10-07","activities":["Arrive at Grand Canyon National Park, check into your lodge (e.g., El Tovar Hotel or Bright Angel Lodge)","Guided South Rim bus tour (stops at Desert View Watchtower, Yavapai Point, and Grandview Point)","Enjoy a sunset view from Mather Point and dinner at the lodge restaurant"]}},{{"day":"2","date":"2024-10-08","activities":["Guided hike/climbing experience at Grand Canyon's Rim-to-Rim trail (shorter section, suitable for a day's climb)","Scenic lunch at a viewpoint along the South Rim trail","Attend a ranger-led stargazing session (if available) or relax at the lodge with evening drinks by the fire"]}},{{"day":"3","date":"2024-10-09","activities":["Helicopter tour over the Grand Canyon for breathtaking aerial views","Lunch at Grand Canyon Village, last-minute shopping for souvenirs","Depart from Grand Canyon National Park"]}}]}}
       """
     },
     {
