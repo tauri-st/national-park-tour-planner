@@ -9,7 +9,9 @@ from langchain_openai import OpenAI
 # app will run at: http://127.0.0.1:5000/
 
 #* Create instance of OpenAI class
-llm = OpenAI()
+llm = OpenAI(
+   max_tokens = -1
+)
 
 #* Create instance of JsonOutputParser
 parser = JsonOutputParser()
