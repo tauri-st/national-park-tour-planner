@@ -12,8 +12,6 @@ from langchain_openai import OpenAI
 llm = OpenAI()
 
 #* Create instance of JsonOutputParser
-llm = OpenAI()
- 
 parser = JsonOutputParser()
 
 # Initialize logging
