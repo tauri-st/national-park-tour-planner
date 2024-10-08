@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import logging
 from datetime import datetime
-from langchain_core.prompts.few_shot import FewShotPromptTemplate
 from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts.few_shot import FewShotPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_openai import OpenAI
 
