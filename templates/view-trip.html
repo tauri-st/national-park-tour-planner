@@ -31,7 +31,7 @@
 
         <a href="/"><img src="../static/img/back-arrow.png" alt="back arrow" class="icons" />Back to all
           the trips</a>
-        <h2>{{ trip_name }}</h2>
+        <h2>{{ output.trip_name }}</h2>
         <p id="location">Location: {{ output.location }}</p>
         <p id="trip-date">Dates: {{ output.trip_start }} - {{ output.trip_end }}</p>
         <p id="traveling-with">Companions: {{ output.traveling_with }}</p>
@@ -57,7 +57,7 @@
   <aside>
     <div class="trip-content-wrapper">
       <h2>Overall itinerary</h2>
-      {% for day in itinerary %}
+      {% for day in output.itinerary %}
       <h3>Day {{ day.day }}</h3>
       <p>Date: {{ day.date }}</p>
       <p>Morning: {{ day.morning }}</p>
