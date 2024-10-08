@@ -11,6 +11,11 @@ from langchain_openai import OpenAI
 #* Create instance of OpenAI class
 llm = OpenAI()
 
+#* Create instance of JsonOutputParser
+llm = OpenAI()
+ 
+parser = JsonOutputParser()
+
 # Initialize logging
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
