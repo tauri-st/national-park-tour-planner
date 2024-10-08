@@ -100,10 +100,6 @@ def plan_trip():
 # Define the route for view trip page with the generated trip itinerary
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
-  # log the request form object
-  response = llm.invoke(prompt)
-  output = parser.parse(response)
-  log.info(output)
   # create comma seperated lists for all prompts with multi-select to collect all values
   # this is based on the "name" property in the form inputs in plan-trip.html
   traveling_with_list = ",".join(request.form.getlist("traveling-with"))
@@ -121,8 +117,12 @@ def view_trip():
   }
   #log.info(cleaned_form_data)
   prompt = build_new_trip_prompt(cleaned_form_data)
+  
   #* Make a call to OpenAI, send your new prompt with examples to the model
   response = llm.invoke(prompt)
+  #* Log the request form object
+  output = parser.parse(response)
+  log.info(output)
   #* Log response from the model
   log.info(response)
   log.info(prompt)
