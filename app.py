@@ -103,7 +103,9 @@ def plan_trip():
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
   # log the request form object
-  log.info(request.form)
+  response = llm.invoke(prompt)
+  output = parser.parse(response)
+  log.info(output)
   # create comma seperated lists for all prompts with multi-select to collect all values
   # this is based on the "name" property in the form inputs in plan-trip.html
   traveling_with_list = ",".join(request.form.getlist("traveling-with"))
