@@ -128,7 +128,9 @@ def view_trip():
   #* Log response from the model
   log.info(response)
   log.info(prompt)
-  return render_template("view-trip.html")
+  # pass context dictionary which then can be referenced using variable names to output dynamic data.
+  # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
+  return render_template("view-trip.html", output = output)
     
 # Run the flask server
 if __name__ == "__main__":#
