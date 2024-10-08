@@ -109,13 +109,13 @@ def view_trip():
   adventure_list = ", ".join(request.form.getlist("adventure"))
   # create a dictionary containing cleaned form data
   cleaned_form_data = {
-        "location": request.form["location-search"],
-        "trip_start": request.form["trip-start"],
-        "trip_end": request.form["trip-end"],
-        "traveling_with": traveling_with_list,
-        "lodging": lodging_list,
-        "adventure": adventure_list,
-        "trip_name": request.form["trip-name"]
+    "location": request.form["location-search"],
+    "trip_start": request.form["trip-start"],
+    "trip_end": request.form["trip-end"],
+    "traveling_with": traveling_with_list,
+    "lodging": lodging_list,
+    "adventure": adventure_list,
+    "trip_name": request.form["trip-name"]
   }
   #log.info(cleaned_form_data)
   prompt = build_new_trip_prompt(cleaned_form_data)
