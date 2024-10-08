@@ -112,9 +112,9 @@ def view_trip():
     "location": request.form["location-search"],
     "trip_start": request.form["trip-start"],
     "trip_end": request.form["trip-end"],
-    "traveling_with": traveling_with_list,
-    "lodging": lodging_list,
-    "adventure": adventure_list,
+    "traveling_with_list": traveling_with_list,
+    "lodging_list": lodging_list,
+    "adventure_list": adventure_list,
     "trip_name": request.form["trip-name"]
   }
   #log.info(cleaned_form_data)
@@ -125,9 +125,7 @@ def view_trip():
   #* Log the request form object
   output = parser.parse(response)
   log.info(output)
-  #* Log response from the model
-  log.info(response)
-  log.info(prompt)
+  
   # pass context dictionary which then can be referenced using variable names to output dynamic data.
   # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
   return render_template("view-trip.html", output = output)
