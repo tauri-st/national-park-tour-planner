@@ -112,9 +112,9 @@ def view_trip():
         "location": request.form["location-search"],
         "trip_start": request.form["trip-start"],
         "trip_end": request.form["trip-end"],
-        "traveling_with_list": traveling_with_list,
-        "lodging_list": lodging_list,
-        "adventure_list": adventure_list,
+        "traveling_with": traveling_with_list,
+        "lodging": lodging_list,
+        "adventure": adventure_list,
         "trip_name": request.form["trip-name"]
   }
   #log.info(cleaned_form_data)
