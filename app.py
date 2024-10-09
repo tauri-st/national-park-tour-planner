@@ -124,8 +124,6 @@ def view_trip():
 
   chain = prompt | llm | parser
   
-  #* Make a call to OpenAI, send your new prompt with examples to the model
-  response = llm.invoke(prompt)
   #* Log the request form object
   log.info(output)
   
