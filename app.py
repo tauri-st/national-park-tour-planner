@@ -108,7 +108,7 @@ def view_trip():
   lodging_list = ", ".join(request.form.getlist("lodging"))
   adventure_list = ", ".join(request.form.getlist("adventure"))
   # create a dictionary containing cleaned form data
-  cleaned_form_data = {
+  output = chain.invoke({
     "location": request.form["location-search"],
     "trip_start": request.form["trip-start"],
     "trip_end": request.form["trip-end"],
@@ -116,14 +116,17 @@ def view_trip():
     "lodging_list": lodging_list,
     "adventure_list": adventure_list,
     "trip_name": request.form["trip-name"]
-  }
+  })
   #log.info(cleaned_form_data)
   prompt = build_new_trip_prompt_template(cleaned_form_data)
+
+  #* Build LangChain
+
+  chain = prompt | llm | parser
   
   #* Make a call to OpenAI, send your new prompt with examples to the model
   response = llm.invoke(prompt)
   #* Log the request form object
-  output = parser.parse(response)
   log.info(output)
   
   # pass context dictionary which then can be referenced using variable names to output dynamic data.
