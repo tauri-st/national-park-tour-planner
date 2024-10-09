@@ -107,6 +107,13 @@ def view_trip():
   traveling_with_list = ",".join(request.form.getlist("traveling-with"))
   lodging_list = ", ".join(request.form.getlist("lodging"))
   adventure_list = ", ".join(request.form.getlist("adventure"))
+
+  #log.info(cleaned_form_data)
+  prompt = build_new_trip_prompt_template()
+
+  #* Build LangChain
+  chain = prompt | llm | parser
+
   # create a dictionary containing cleaned form data
   output = chain.invoke({
     "location": request.form["location-search"],
@@ -117,15 +124,6 @@ def view_trip():
     "adventure_list": adventure_list,
     "trip_name": request.form["trip-name"]
   })
-  #log.info(cleaned_form_data)
-  prompt = build_new_trip_prompt_template(cleaned_form_data)
-
-  #* Build LangChain
-
-  chain = prompt | llm | parser
-  
-  #* Log the request form object
-  log.info(output)
   
   # pass context dictionary which then can be referenced using variable names to output dynamic data.
   # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
