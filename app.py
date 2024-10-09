@@ -118,7 +118,7 @@ def view_trip():
     "trip_name": request.form["trip-name"]
   }
   #log.info(cleaned_form_data)
-  prompt = build_new_trip_prompt(cleaned_form_data)
+  prompt = build_new_trip_prompt_template(cleaned_form_data)
   
   #* Make a call to OpenAI, send your new prompt with examples to the model
   response = llm.invoke(prompt)
