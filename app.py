@@ -26,7 +26,7 @@ app = Flask(__name__)
 #* Write a prompt template
 # First we temporarily use placeholders,
 # but this will eventually accept user form data
-def build_new_trip_prompt(form_data):
+def build_new_trip_prompt_template():
   #* Declare example dictionary to convert to "few-shot" prompting
   #response has to be in JSON format so that we can interact with the values and in this case display the data on the page
   examples = [
@@ -78,16 +78,16 @@ def build_new_trip_prompt(form_data):
     example_prompt = example_prompt,
     #set to the real prompt with the user's form data included
     #it will be appnded to the end of all the example prompts to give the model context
-    suffix = "{input}",
+    suffix = "This trip is to {location} between {trip_start} and {trip_end}. This person will be traveling {traveling_with} and would like to stay in {lodging}. They want to {adventure}. Create a daily itinerary for this trip using this information. You are a backend data processor that is part of our site's programmatic workflow. Output the itinerary as only JSON with no text before or after the JSON.",
     #set to inputs that will be assigned values when .format() is called
     #this input passes in the real prompt with the user's form data included
-    input_variables = ["input"],
+    input_variables = ["location", "trip_start", "trip_end", "traveling_with", "lodging", "adventure"],
   )
 
-  #* Call format on the few_shot_prompt
-  return few_shot_prompt.format(
-     input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information."
-  )
+  return few_shot_prompt
+
+  # Call format on the few_shot_prompt
+  # return few_shot_prompt.format(input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information.")
 
 # Define the route for the home page
 @app.route("/", methods=["GET"])
