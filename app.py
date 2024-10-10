@@ -89,6 +89,14 @@ def build_new_trip_prompt_template():
   # Call format on the few_shot_prompt
   # return few_shot_prompt.format(input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information.")
 
+def build_weather_prompt_template():
+   # TODO: Create example prompts with a few shot template
+   #* Show the model how you want it to take the trip information as an input
+    # TODO: Write a chain that uses the new prompt template
+   #* Show the model how to update to include weather information
+    # TODO: Invoke the chain and get the response then send it to the view file
+    # TODO: Update the view file to display the weather information
+
 # Define the route for the home page
 @app.route("/", methods=["GET"])
 def index():
