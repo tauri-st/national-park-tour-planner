@@ -114,6 +114,21 @@ def build_weather_prompt_template():
     }
   ]
   #* Show the model how you want it to take the trip information as an input
+  example_prompt = PromptTemplate.from_template(
+    template =
+    """
+    {prompt}\n{response}
+    """
+  )
+
+  few_shot_prompt = FewShotPromptTemplate(
+    examples = examples,
+    example_prompt = example_prompt,
+    suffix = "Update the following JSON object to include typical weather conditions for the trip based on the values of trip_start, trip_end, and location. Keep the object exactly as it is, and add a key / value pair to the JSON, with the key being typical_weather and the value being a string describing the typical weather for the time period. Add this key / value pair after the key / value pair with a key of location. You are a backend data processor that is part of our site's programmatic workflow. Output the itinerary as only JSON with no text before or after the JSON. {input}",
+    input_variables = ["input"],
+  )
+
+  return few_shot_prompt
   # TODO: Write a chain that uses the new prompt template
   #* Show the model how to update to include weather information
   # TODO: Invoke the chain and get the response then send it to the view file
