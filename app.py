@@ -131,6 +131,7 @@ def build_weather_prompt_template():
   return few_shot_prompt
 
   # TODO: Update the view file to display the weather information
+  #* Show the model how to update to include weather information
 
 # Define the route for the home page
 @app.route("/", methods=["GET"])
@@ -172,6 +173,11 @@ def view_trip():
   prompt2 = build_weather_prompt_template()
 
   chain2 = prompt2 | llm | parser
+
+  #* Invoke the chain and get the response then send it to the view file
+  # You can only send a string to a model as input, so you need to convert the output back to a string
+  output_str = json.dumps(output)
+  output2 = chain2.invoke({"input": output_str})
 
   log.info(output)
   
