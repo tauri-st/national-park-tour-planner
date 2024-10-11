@@ -90,7 +90,6 @@ def build_new_trip_prompt_template():
   # return few_shot_prompt.format(input = "This trip is to " + form_data["location"] + " between " + form_data["trip_start"] + " and " +  form_data["trip_end"] + ". This person will be traveling " + form_data["traveling_with_list"] + " and would like to stay in " + form_data["lodging_list"] + ". They want to " + form_data["adventure_list"] + ". Create a daily itinerary for this trip using this information.")
 
 def build_weather_prompt_template():
-  # TODO: Create example prompts with a few shot template
   examples = [
     {
       "prompt":
@@ -101,7 +100,7 @@ def build_weather_prompt_template():
       """
       {{"trip_name":"Family Adventure at Crater Lake","location":"Crater Lake National Park","typical_weather":"In October, the weather in Crater Lake is typically cool with daytime highs at 71 degrees and night time lows at 43 degrees.","trip_start":"2028-01-01","trip_end":"2028-01-04","traveling_with":"group, with kids","lodging":"bed & breakfasts","adventure":"hike, guided tours, swim, canoe, raft, cycle, bird-watch, climb","itinerary":[{{"day":"1","date":"2028-01-01","morning":"Arrive at Crater Lake National Park","afternoon":"Check into bed & breakfast, explore nearby hiking trails","evening":"Enjoy a cozy dinner at the bed & breakfast"}}]}}
       """,
-    }
+    },
     {
       "prompt":
       """
@@ -129,7 +128,7 @@ def build_weather_prompt_template():
   )
 
   return few_shot_prompt
-  # TODO: Write a chain that uses the new prompt template
+
   #* Show the model how to update to include weather information
   # TODO: Invoke the chain and get the response then send it to the view file
   # TODO: Update the view file to display the weather information
@@ -169,6 +168,9 @@ def view_trip():
     "adventure": adventure_list,
     "trip_name": request.form["trip-name"]
   })
+
+  # TODO: Write a chain that uses the new prompt template
+
 
   log.info(output)
   
