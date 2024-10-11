@@ -131,7 +131,6 @@ def build_weather_prompt_template():
   return few_shot_prompt
 
   # TODO: Update the view file to display the weather information
-  #* Show the model how to update to include weather information
 
 # Define the route for the home page
 @app.route("/", methods=["GET"])
@@ -183,7 +182,7 @@ def view_trip():
   
   # pass context dictionary which then can be referenced using variable names to output dynamic data.
   # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
-  return render_template("view-trip.html", output = output)
+  return render_template("view-trip.html", output = output2)
     
 # Run the flask server
 if __name__ == "__main__":#
