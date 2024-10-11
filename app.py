@@ -5,6 +5,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.prompts.few_shot import FewShotPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_openai import OpenAI
+import json
 
 # app will run at: http://127.0.0.1:5000/
 
@@ -129,8 +130,6 @@ def build_weather_prompt_template():
 
   return few_shot_prompt
 
-  #* Show the model how to update to include weather information
-  # TODO: Invoke the chain and get the response then send it to the view file
   # TODO: Update the view file to display the weather information
 
 # Define the route for the home page
