@@ -169,8 +169,10 @@ def view_trip():
     "trip_name": request.form["trip-name"]
   })
 
-  # TODO: Write a chain that uses the new prompt template
+  # Write a chain that uses the new prompt template for weather
+  prompt2 = build_weather_prompt_template()
 
+  chain2 = prompt2 | llm | parser
 
   log.info(output)
   
