@@ -130,8 +130,6 @@ def build_weather_prompt_template():
 
   return few_shot_prompt
 
-  # TODO: Update the view file to display the weather information
-
 # Define the route for the home page
 @app.route("/", methods=["GET"])
 def index():
