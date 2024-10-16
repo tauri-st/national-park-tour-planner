@@ -77,6 +77,50 @@ def view_trip():
   # pass context dictionary which then can be referenced using variable names to output dynamic data.
   # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
   return render_template("view-trip.html", output = output2)
+
+# inform the LLM what type of response we're looking for and how we want the response to be formatted
+# user's form responses will be used as arguments
+def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure):
+  """
+  Generates a structured input string for the trip planning agent.
+  """
+  return f"""
+    Create an itinerary for a trip to {location}.
+    The trip starts on: {trip_start}
+    The trip ends on: {trip_end}
+    I will be traveling with {traveling_with}
+    I would like to stay in {lodging}
+    I would like to do the following activities: {adventure}
+ 
+    Please generate a complete and detailed trip itinerary with the following JSON data structure:
+ 
+    {{
+      "trip_name": "String - Name of the trip",
+      "location": "String - Location of the trip",
+      "trip_start": "String - Start date of the trip",
+      "trip_end": "String - End date of the trip",
+      "typical_weather": "String - Description of typical weather for the trip",
+      "traveling_with": "String - Description of travel companions",
+      "lodging": "String - Description of lodging arrangements",
+      "adventure": "String - Description of planned activities",
+      "itinerary": [
+        {{
+          "day": "Integer - Day number",
+          "date": "String - Date of this day",
+          "morning": "String - Description of morning activities",
+          "afternoon": "String - Description of afternoon activities",
+          "evening": "String - Description of evening activities"
+        }}
+      ],
+      "important_things_to_know": "String - Any important things to know about the park being visited."
+    }}
+ 
+    The trip should be appropriate for those listed as traveling, themed around the interests specified, and that last for the entire specified duration of the trip.
+    Include realistic and varied activities for each day, considering the location, hours of operation, and typical weather.
+    Make sure all fields are filled with appropriate and engaging content.
+    Include descriptive information about each day's activities and destination.
+    Respond only with a valid parseable JSON object representing the itinerary.
+    """
     
 # Run the flask server
 if __name__ == "__main__":#
