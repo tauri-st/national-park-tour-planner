@@ -51,6 +51,10 @@ def view_trip():
 
   # Call generate function and create the input string with the user's unique trip information
   input_data = generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure)
+  print('input_data: \n', input_data, '\n')
+
+  # Create a tool for the agent to use that utilizes Wikipedia's run function
+  wikipedia_tool = create_wikipedia_tool()
  
   return render_template("view-trip.html", output=response["output"])
 
