@@ -39,44 +39,16 @@ def plan_trip():
 # Define the route for view trip page with the generated trip itinerary
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
-  # create comma seperated lists for all prompts with multi-select to collect all values
-  # this is based on the "name" property in the form inputs in plan-trip.html
-  traveling_with_list = ",".join(request.form.getlist("traveling-with"))
-  lodging_list = ", ".join(request.form.getlist("lodging"))
-  adventure_list = ", ".join(request.form.getlist("adventure"))
-
-  #log.info(cleaned_form_data)
-  prompt = build_new_trip_prompt_template()
-
-  #* Build LangChain
-  chain = prompt | llm | parser
-
-  # create a dictionary containing cleaned form data
-  output = chain.invoke({
-    "location": request.form["location-search"],
-    "trip_start": request.form["trip-start"],
-    "trip_end": request.form["trip-end"],
-    "traveling_with": traveling_with_list,
-    "lodging": lodging_list,
-    "adventure": adventure_list,
-    "trip_name": request.form["trip-name"]
-  })
-
-  # Write a chain that uses the new prompt template for weather
-  prompt2 = build_weather_prompt_template()
-
-  chain2 = prompt2 | llm | parser
-
-  #* Invoke the chain and get the response then send it to the view file
-  # You can only send a string to a model as input, so you need to convert the output back to a string
-  output_str = json.dumps(output)
-  output2 = chain2.invoke({"input": output_str})
-
-  log.info(output2)
-  
-  # pass context dictionary which then can be referenced using variable names to output dynamic data.
-  # Add a second argument to render_template() as a key / value pair, with the key being output and the value being output, which is the JSON-parsed response from the model:
-  return render_template("view-trip.html", output = output2)
+  """Handles the form submission to view the generated trip itinerary."""
+  # Extract form data
+  location = request.form["location-search"]
+  trip_start = request.form["trip-start"]
+  trip_end = request.form["trip-end"]
+  traveling_with = ", ".join(request.form.getlist("traveling-with"))
+  lodging = ", ".join(request.form.getlist("lodging"))
+  adventure = ", ".join(request.form.getlist("adventure"))
+ 
+  return render_template("view-trip.html", output=response["output"])
 
 # inform the LLM what type of response we're looking for and how we want the response to be formatted
 # user's form responses will be used as arguments
