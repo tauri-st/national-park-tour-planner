@@ -37,6 +37,7 @@ def plan_trip():
   return render_template("plan-trip.html")
 
 # Define the route for view trip page with the generated trip itinerary
+# For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
   """Handles the form submission to view the generated trip itinerary."""
@@ -47,6 +48,9 @@ def view_trip():
   traveling_with = ", ".join(request.form.getlist("traveling-with"))
   lodging = ", ".join(request.form.getlist("lodging"))
   adventure = ", ".join(request.form.getlist("adventure"))
+
+  # Call generate function and create the input string with the user's unique trip information
+  input_data = generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure)
  
   return render_template("view-trip.html", output=response["output"])
 
