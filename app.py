@@ -55,6 +55,9 @@ def view_trip():
 
   # Create a tool for the agent to use that utilizes Wikipedia's run function
   wikipedia_tool = create_wikipedia_tool()
+
+  # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
+  prompt = hub.pull("hwchase17/react-chat-json")
  
   return render_template("view-trip.html", output=response["output"])
 
