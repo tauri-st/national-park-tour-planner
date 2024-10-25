@@ -122,6 +122,7 @@ def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging,
     Respond only with a valid parseable JSON object representing the itinerary.
     """
 
+# Allows the agent to use the WikipediaQueryRun tool
 def create_wikipedia_tool():
   """
   Creates a built-in langchain tool for querying Wikipedia.
