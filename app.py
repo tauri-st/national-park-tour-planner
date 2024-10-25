@@ -121,6 +121,17 @@ def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging,
     Include descriptive information about each day's activities and destination.
     Respond only with a valid parseable JSON object representing the itinerary.
     """
+
+def create_wikipedia_tool():
+  """
+  Creates a built-in langchain tool for querying Wikipedia.
+  """
+  wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+  return StructuredTool.from_function(
+    func=wikipedia.run,
+    name="Wikipedia",
+    description="Useful for Wikipedia searches about national parks."
+  )
     
 # Run the flask server
 if __name__ == "__main__":#
