@@ -58,6 +58,9 @@ def view_trip():
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
+
+  # Create our agent that will utilize tools and return JSON
+  agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool], prompt=prompt)
  
   return render_template("view-trip.html", output=response["output"])
 
