@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import logging
 from datetime import datetime
-from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
 #Allows to call an agent into the code
 from langchain.agents import create_json_chat_agent, AgentExecutor
 #These two APIs will be used with Wikipedia built-in tool which makes it easy to access and parse data from Wikipedia
