@@ -2,8 +2,16 @@ from flask import Flask, render_template, request
 import logging
 from datetime import datetime
 from langchain_openai import ChatOpenAI
+#Allow yous to make a request to a web page
+import requests
+import json
 #Allows to call an agent into the code
-from langchain.agents import create_json_chat_agent, AgentExecutor
+#Adding tool makes the custom tools you build available to the agent.
+from langchain.agents import create_json_chat_agent, AgentExecutor, tool
+#Enables you to compare two strings to be sure they match
+from fuzzywuzzy import fuzz, process
+# Allows you to access environmental variables so you can store your API key safely
+import os
 #These two APIs will be used with Wikipedia built-in tool which makes it easy to access and parse data from Wikipedia
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
