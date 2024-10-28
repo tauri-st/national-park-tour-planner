@@ -14,17 +14,19 @@ from langchain import hub
 
 # app will run at: http://127.0.0.1:5000/
 
-#* Create instance of OpenAI class
-llm = OpenAI(
-   max_tokens = -1
-)
-
 # Initialize logging
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
 
 # Initialize the Flask application
 app = Flask(__name__)
+
+#* Create instance of OpenAI class
+llm = ChatOpenAI(
+  model="gpt-3.5-turbo",
+  temperature=0.5,
+  max_tokens=4000
+)
 
 # Define the route for the home page
 @app.route("/", methods=["GET"])
@@ -69,6 +71,8 @@ def view_trip():
  
   # Invoke the agent with the input data
   response = agent_executor.invoke({"input": input_data})
+
+  log.info(response["output"])
   
   return render_template("view-trip.html", output=response["output"])
 
