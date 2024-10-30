@@ -73,6 +73,17 @@ def view_trip():
     base_url = "https://developer.nps.gov/api/v1"
     api_key = os.environ.get("NPS_API_KEY")
 
+    def fetch_data(endpoint, params):
+      """
+      Fetches data from the NPS API given an endpoint and parameters.
+      """
+      url = f"{base_url}/{endpoint}"
+      params['api_key'] = api_key
+      response = requests.get(url, params=params)
+      if response.status_code == 200:
+        return response.json()
+      return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
+
     print(api_key)
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
