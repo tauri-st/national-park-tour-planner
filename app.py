@@ -102,6 +102,18 @@ def view_trip():
         if park['fullName'] == best_match_name:
           return park
       return None
+    
+    def find_related_data_for_park(park):
+      """
+      Finds related data for a park from various NPS API endpoints.
+      """
+      park_code = park["parkCode"]
+      endpoints = [
+        "activities/parks", "thingstodo" 
+        # Add more endpoints as needed. See https://www.nps.gov/subjects/developer/api-documentation.htm.
+      ]
+      related_data = {endpoint: fetch_data(endpoint, {"parkCode": park_code}) for endpoint in endpoints}
+      return related_data
 
     print(api_key)
 
