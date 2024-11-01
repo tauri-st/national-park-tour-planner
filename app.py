@@ -91,6 +91,18 @@ def view_trip():
       """
       return fetch_data("parks", {"q": park_name}).get("data", [])
 
+    # uses fuzzy search to search the list of parks returned by the search_parks_by_name() function and identify the one that most closely matches the park name
+    def find_best_matching_park(park_name, parks):
+      """
+      Finds the best matching park using fuzzy search.
+      """
+      park_names = [park['fullName'] for park in parks]
+      best_match_name, _ = process.extractOne(park_name, park_names, scorer=fuzz.partial_ratio)
+      for park in parks:
+        if park['fullName'] == best_match_name:
+          return park
+      return None
+
     print(api_key)
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
