@@ -83,6 +83,13 @@ def view_trip():
       if response.status_code == 200:
         return response.json()
       return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
+    
+    # takes a park name as an argument and uses the fetch_data function to make an API call
+    def search_parks_by_name(park_name):
+      """
+      Searches for parks by name.
+      """
+      return fetch_data("parks", {"q": park_name}).get("data", [])
 
     print(api_key)
 
