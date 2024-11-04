@@ -83,7 +83,8 @@ def view_trip():
       if response.status_code == 200:
         return response.json()
       return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
-    
+    print(api_key)
+
     # takes a park name as an argument and uses the fetch_data function to make an API call
     def search_parks_by_name(park_name):
       """
@@ -114,8 +115,6 @@ def view_trip():
       ]
       related_data = {endpoint: fetch_data(endpoint, {"parkCode": park_code}) for endpoint in endpoints}
       return related_data
-
-    print(api_key)
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
