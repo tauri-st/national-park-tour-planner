@@ -150,7 +150,7 @@ def view_trip():
   # Create a runnable instance of the agent
   # Included in the AgentExecutor you’ll add the ability to see an error if the LLM isn’t able to parse the response from different inputs: handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
   # You’ll see the error message as part of the output in the command line.
-  agent_executor = AgentExecutor(agent=agent, tools=[wikipedia_tool], verbose=True, handle_parsing_errors="The output from the LLM could not be parsed or is incomplete.")
+  agent_executor = AgentExecutor(agent=agent, tools=[wikipedia_tool, nps_tool], verbose=True, handle_parsing_errors="The output from the LLM could not be parsed or is incomplete.")
  
   # Invoke the agent with the input data
   response = agent_executor.invoke({"input": input_data})
