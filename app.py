@@ -145,7 +145,7 @@ def view_trip():
   prompt = hub.pull("hwchase17/react-chat-json")
 
   # Create our agent that will utilize tools and return JSON
-  agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool], prompt=prompt)
+  agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool, nps_tool], prompt=prompt)
 
   # Create a runnable instance of the agent
   # Included in the AgentExecutor you’ll add the ability to see an error if the LLM isn’t able to parse the response from different inputs: handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
