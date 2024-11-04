@@ -66,6 +66,9 @@ def view_trip():
   # Create a tool for the agent to use that utilizes Wikipedia's run function
   wikipedia_tool = create_wikipedia_tool()
 
+  # Define and register a custom tool for retrieving data from the National Park Service API
+  nps_tool = create_nps_tool()
+
   def create_nps_tool():
     """
     Creates a custom tool for retrieving data from the National Park Service (NPS) API.
