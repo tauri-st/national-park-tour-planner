@@ -69,6 +69,24 @@ def view_trip():
   # Define and register a custom tool for retrieving data from the National Park Service API
   nps_tool = create_nps_tool()
 
+  # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
+  prompt = hub.pull("hwchase17/react-chat-json")
+
+  # Create our agent that will utilize tools and return JSON
+  agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool, nps_tool], prompt=prompt)
+
+  # Create a runnable instance of the agent
+  # Included in the AgentExecutor you’ll add the ability to see an error if the LLM isn’t able to parse the response from different inputs: handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
+  # You’ll see the error message as part of the output in the command line.
+  agent_executor = AgentExecutor(agent=agent, tools=[wikipedia_tool, nps_tool], verbose=True, handle_parsing_errors="The output from the LLM could not be parsed or is incomplete.")
+ 
+  # Invoke the agent with the input data
+  response = agent_executor.invoke({"input": input_data})
+
+  log.info(response["output"])
+  
+  return render_template("view-trip.html", output=response["output"])
+
   def create_nps_tool():
     """
     Creates a custom tool for retrieving data from the National Park Service (NPS) API.
@@ -140,24 +158,6 @@ def view_trip():
         combined_data = {"error": f"Park named '{park_name}' not found."}
       return json.dumps(combined_data, indent=4)
   return search_park_and_related_data
-
-  # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
-  prompt = hub.pull("hwchase17/react-chat-json")
-
-  # Create our agent that will utilize tools and return JSON
-  agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool, nps_tool], prompt=prompt)
-
-  # Create a runnable instance of the agent
-  # Included in the AgentExecutor you’ll add the ability to see an error if the LLM isn’t able to parse the response from different inputs: handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
-  # You’ll see the error message as part of the output in the command line.
-  agent_executor = AgentExecutor(agent=agent, tools=[wikipedia_tool, nps_tool], verbose=True, handle_parsing_errors="The output from the LLM could not be parsed or is incomplete.")
- 
-  # Invoke the agent with the input data
-  response = agent_executor.invoke({"input": input_data})
-
-  log.info(response["output"])
-  
-  return render_template("view-trip.html", output=response["output"])
 
 # inform the LLM what type of response we're looking for and how we want the response to be formatted
 # user's form responses will be used as arguments
