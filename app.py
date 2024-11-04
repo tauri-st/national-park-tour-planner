@@ -121,6 +121,9 @@ def view_trip():
       """
       Searches for a park and finds related data.
       """
+      # strip method removes leading and trailing white spaces
+      park_name = input.strip()
+      parks = search_parks_by_name(park_name)
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
