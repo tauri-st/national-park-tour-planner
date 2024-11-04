@@ -126,6 +126,13 @@ def view_trip():
       parks = search_parks_by_name(park_name)
       if parks:
         best_matching_park = find_best_matching_park(park_name, parks)
+        if best_matching_park:
+          combined_data = {
+            "park": best_matching_park,
+            "related_data": find_related_data_for_park(best_matching_park)
+          }
+        else:
+          combined_data = {"error": f"Exact park named '{park_name}' not found in search results."}
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
