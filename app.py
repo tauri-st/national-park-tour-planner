@@ -136,6 +136,7 @@ def view_trip():
       else:
         combined_data = {"error": f"Park named '{park_name}' not found."}
       return json.dumps(combined_data, indent=4)
+  return search_park_and_related_data
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
