@@ -115,6 +115,12 @@ def view_trip():
       ]
       related_data = {endpoint: fetch_data(endpoint, {"parkCode": park_code}) for endpoint in endpoints}
       return related_data
+    
+    @tool
+    def search_park_and_related_data(input: str) -> str:
+      """
+      Searches for a park and finds related data.
+      """
 
   # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
