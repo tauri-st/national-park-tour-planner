@@ -87,6 +87,62 @@ def view_trip():
   
   return render_template("view-trip.html", output=response["output"])
 
+# inform the LLM what type of response we're looking for and how we want the response to be formatted
+# user's form responses will be used as arguments
+def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure):
+  """
+  Generates a structured input string for the trip planning agent.
+  """
+  return f"""
+    Create an itinerary for a trip to {location}.
+    The trip starts on: {trip_start}
+    The trip ends on: {trip_end}
+    I will be traveling with {traveling_with}
+    I would like to stay in {lodging}
+    I would like to do the following activities: {adventure}
+ 
+    Please generate a complete and detailed trip itinerary with the following JSON data structure:
+ 
+    {{
+      "trip_name": "String - Name of the trip",
+      "location": "String - Location of the trip",
+      "trip_start": "String - Start date of the trip",
+      "trip_end": "String - End date of the trip",
+      "typical_weather": "String - Description of typical weather for the trip",
+      "traveling_with": "String - Description of travel companions",
+      "lodging": "String - Description of lodging arrangements",
+      "adventure": "String - Description of planned activities",
+      "itinerary": [
+        {{
+          "day": "Integer - Day number",
+          "date": "String - Date of this day",
+          "morning": "String - Description of morning activities",
+          "afternoon": "String - Description of afternoon activities",
+          "evening": "String - Description of evening activities"
+        }}
+      ],
+      "important_things_to_know": "String - Any important things to know about the park being visited."
+    }}
+ 
+    The trip should be appropriate for those listed as traveling, themed around the interests specified, and that last for the entire specified duration of the trip.
+    Include realistic and varied activities for each day, considering the location, hours of operation, and typical weather.
+    Make sure all fields are filled with appropriate and engaging content.
+    Include descriptive information about each day's activities and destination.
+    Respond only with a valid parseable JSON object representing the itinerary.
+    """
+
+# Allows the agent to use the WikipediaQueryRun tool
+def create_wikipedia_tool():
+  """
+  Creates a built-in langchain tool for querying Wikipedia.
+  """
+  wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+  return StructuredTool.from_function(
+    func=wikipedia.run,
+    name="Wikipedia",
+    description="Useful for Wikipedia searches about national parks."
+  )
+
   def create_nps_tool():
     """
     Creates a custom tool for retrieving data from the National Park Service (NPS) API.
@@ -158,62 +214,6 @@ def view_trip():
         combined_data = {"error": f"Park named '{park_name}' not found."}
       return json.dumps(combined_data, indent=4)
   return search_park_and_related_data
-
-# inform the LLM what type of response we're looking for and how we want the response to be formatted
-# user's form responses will be used as arguments
-def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure):
-  """
-  Generates a structured input string for the trip planning agent.
-  """
-  return f"""
-    Create an itinerary for a trip to {location}.
-    The trip starts on: {trip_start}
-    The trip ends on: {trip_end}
-    I will be traveling with {traveling_with}
-    I would like to stay in {lodging}
-    I would like to do the following activities: {adventure}
- 
-    Please generate a complete and detailed trip itinerary with the following JSON data structure:
- 
-    {{
-      "trip_name": "String - Name of the trip",
-      "location": "String - Location of the trip",
-      "trip_start": "String - Start date of the trip",
-      "trip_end": "String - End date of the trip",
-      "typical_weather": "String - Description of typical weather for the trip",
-      "traveling_with": "String - Description of travel companions",
-      "lodging": "String - Description of lodging arrangements",
-      "adventure": "String - Description of planned activities",
-      "itinerary": [
-        {{
-          "day": "Integer - Day number",
-          "date": "String - Date of this day",
-          "morning": "String - Description of morning activities",
-          "afternoon": "String - Description of afternoon activities",
-          "evening": "String - Description of evening activities"
-        }}
-      ],
-      "important_things_to_know": "String - Any important things to know about the park being visited."
-    }}
- 
-    The trip should be appropriate for those listed as traveling, themed around the interests specified, and that last for the entire specified duration of the trip.
-    Include realistic and varied activities for each day, considering the location, hours of operation, and typical weather.
-    Make sure all fields are filled with appropriate and engaging content.
-    Include descriptive information about each day's activities and destination.
-    Respond only with a valid parseable JSON object representing the itinerary.
-    """
-
-# Allows the agent to use the WikipediaQueryRun tool
-def create_wikipedia_tool():
-  """
-  Creates a built-in langchain tool for querying Wikipedia.
-  """
-  wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-  return StructuredTool.from_function(
-    func=wikipedia.run,
-    name="Wikipedia",
-    description="Useful for Wikipedia searches about national parks."
-  )
     
 # Run the flask server
 if __name__ == "__main__":#
