@@ -143,76 +143,76 @@ def create_wikipedia_tool():
     description="Useful for Wikipedia searches about national parks."
   )
 
-  def create_nps_tool():
+def create_nps_tool():
+  """
+  Creates a custom tool for retrieving data from the National Park Service (NPS) API.
+  """
+  base_url = "https://developer.nps.gov/api/v1"
+  api_key = os.environ.get("NPS_API_KEY")
+
+  def fetch_data(endpoint, params):
     """
-    Creates a custom tool for retrieving data from the National Park Service (NPS) API.
+    Fetches data from the NPS API given an endpoint and parameters.
     """
-    base_url = "https://developer.nps.gov/api/v1"
-    api_key = os.environ.get("NPS_API_KEY")
+    url = f"{base_url}/{endpoint}"
+    params['api_key'] = api_key
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+      return response.json()
+    return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
+  print(api_key)
 
-    def fetch_data(endpoint, params):
-      """
-      Fetches data from the NPS API given an endpoint and parameters.
-      """
-      url = f"{base_url}/{endpoint}"
-      params['api_key'] = api_key
-      response = requests.get(url, params=params)
-      if response.status_code == 200:
-        return response.json()
-      return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
-    print(api_key)
+  # takes a park name as an argument and uses the fetch_data function to make an API call
+  def search_parks_by_name(park_name):
+    """
+    Searches for parks by name.
+    """
+    return fetch_data("parks", {"q": park_name}).get("data", [])
 
-    # takes a park name as an argument and uses the fetch_data function to make an API call
-    def search_parks_by_name(park_name):
-      """
-      Searches for parks by name.
-      """
-      return fetch_data("parks", {"q": park_name}).get("data", [])
-
-    # uses fuzzy search to search the list of parks returned by the search_parks_by_name() function and identify the one that most closely matches the park name
-    def find_best_matching_park(park_name, parks):
-      """
-      Finds the best matching park using fuzzy search.
-      """
-      park_names = [park['fullName'] for park in parks]
-      best_match_name, _ = process.extractOne(park_name, park_names, scorer=fuzz.partial_ratio)
-      for park in parks:
-        if park['fullName'] == best_match_name:
-          return park
-      return None
+  # uses fuzzy search to search the list of parks returned by the search_parks_by_name() function and identify the one that most closely matches the park name
+  def find_best_matching_park(park_name, parks):
+    """
+    Finds the best matching park using fuzzy search.
+    """
+    park_names = [park['fullName'] for park in parks]
+    best_match_name, _ = process.extractOne(park_name, park_names, scorer=fuzz.partial_ratio)
+    for park in parks:
+      if park['fullName'] == best_match_name:
+        return park
+    return None
     
-    def find_related_data_for_park(park):
-      """
-      Finds related data for a park from various NPS API endpoints.
-      """
-      park_code = park["parkCode"]
-      endpoints = [
-        "activities/parks", "thingstodo" 
-        # Add more endpoints as needed. See https://www.nps.gov/subjects/developer/api-documentation.htm.
-      ]
-      related_data = {endpoint: fetch_data(endpoint, {"parkCode": park_code}) for endpoint in endpoints}
-      return related_data
+  def find_related_data_for_park(park):
+    """
+    Finds related data for a park from various NPS API endpoints.
+    """
+    park_code = park["parkCode"]
+    endpoints = [
+      "activities/parks", "thingstodo" 
+      # Add more endpoints as needed. See https://www.nps.gov/subjects/developer/api-documentation.htm.
+    ]
+    related_data = {endpoint: fetch_data(endpoint, {"parkCode": park_code}) for endpoint in endpoints}
+    return related_data
     
-    @tool
-    def search_park_and_related_data(input: str) -> str:
-      """
-      Searches for a park and finds related data.
-      """
-      # strip method removes leading and trailing white spaces
-      park_name = input.strip()
-      parks = search_parks_by_name(park_name)
-      if parks:
-        best_matching_park = find_best_matching_park(park_name, parks)
-        if best_matching_park:
-          combined_data = {
-            "park": best_matching_park,
-            "related_data": find_related_data_for_park(best_matching_park)
-          }
-        else:
-          combined_data = {"error": f"Exact park named '{park_name}' not found in search results."}
+  @tool
+  def search_park_and_related_data(input: str) -> str:
+    """
+    Searches for a park and finds related data.
+    """
+    # strip method removes leading and trailing white spaces
+    park_name = input.strip()
+    parks = search_parks_by_name(park_name)
+    if parks:
+      best_matching_park = find_best_matching_park(park_name, parks)
+      if best_matching_park:
+        combined_data = {
+          "park": best_matching_park,
+          "related_data": find_related_data_for_park(best_matching_park)
+        }
       else:
-        combined_data = {"error": f"Park named '{park_name}' not found."}
-      return json.dumps(combined_data, indent=4)
+        combined_data = {"error": f"Exact park named '{park_name}' not found in search results."}
+    else:
+      combined_data = {"error": f"Park named '{park_name}' not found."}
+    return json.dumps(combined_data, indent=4)
   return search_park_and_related_data
     
 # Run the flask server
