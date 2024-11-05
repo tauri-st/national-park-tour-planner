@@ -226,6 +226,7 @@ def create_nps_tool():
 @app.route("/download_pdf", methods=["POST"])
 def download_pdf():
   """Handles the PDF download of the generated trip itinerary."""
+  #* Function scoped variables
   #holds the jsonified trip itinerary details
   output = request.json
 
@@ -242,7 +243,7 @@ def download_pdf():
   # used to build the structure and data that will be contained within the PDF.
   elements = []
 
-  # Create formatting for the PDF
+  #* Create formatting for the PDF
   elements.append(Paragraph(f"<b>Trip Name:</b> {output['trip_name']}", styles['Normal']))
   elements.append(Spacer(1, 12))
   elements.append(Paragraph(f"<b>Location:</b> {output['location']}", styles['Normal']))
@@ -271,6 +272,8 @@ def download_pdf():
     elements.append(Spacer(1, 24))
  
   elements.append(Paragraph(f"<b>Important Things to Know:</b> {output['important_things_to_know']}", styles['Normal']))
+
+  #* Create the PDF
     
 # Run the flask server
 if __name__ == "__main__":#
