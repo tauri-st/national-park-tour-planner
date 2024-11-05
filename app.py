@@ -274,7 +274,13 @@ def download_pdf():
   elements.append(Paragraph(f"<b>Important Things to Know:</b> {output['important_things_to_know']}", styles['Normal']))
 
   #* Create the PDF
-    
-# Run the flask server
+  doc.build(elements)
+  
+  # sets the reference point from where the read of the file will start to the beginning
+  buffer.seek(0)
+  # called to return the file when the user clicks the “Export trip” button
+  return send_file(buffer, as_attachment=True, download_name="itinerary.pdf", mimetype='application/pdf')
+
+#* Run the flask server
 if __name__ == "__main__":#
   app.run()
