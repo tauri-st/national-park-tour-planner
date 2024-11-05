@@ -222,6 +222,10 @@ def create_nps_tool():
     return json.dumps(combined_data, indent=4)
   
   return search_park_and_related_data
+
+@app.route("/download_pdf", methods=["POST"])
+def download_pdf():
+    """Handles the PDF download of the generated trip itinerary."""
     
 # Run the flask server
 if __name__ == "__main__":#
