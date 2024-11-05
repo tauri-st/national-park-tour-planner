@@ -1,8 +1,15 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import logging
+#Handles the steam of data for the PDF and places it temporarily into memory
+import io
 from datetime import datetime
 from langchain_openai import ChatOpenAI
-#Allow yous to make a request to a web page
+# create a formatted PDF of the itinerary:
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+
+#Allows you to make a request to a web page
 import requests
 import json
 #Allows to call an agent into the code
@@ -213,6 +220,7 @@ def create_nps_tool():
     else:
       combined_data = {"error": f"Park named '{park_name}' not found."}
     return json.dumps(combined_data, indent=4)
+  
   return search_park_and_related_data
     
 # Run the flask server
