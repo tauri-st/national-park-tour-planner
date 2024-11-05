@@ -225,8 +225,23 @@ def create_nps_tool():
 
 @app.route("/download_pdf", methods=["POST"])
 def download_pdf():
-    """Handles the PDF download of the generated trip itinerary."""
+  """Handles the PDF download of the generated trip itinerary."""
+  #holds the jsonified trip itinerary details
+  output = request.json
+
+  #work with streaming content. 
+  # io, or i/o, stands for input and output. 
+  # Input refers to the process of reading data from external sources, keeping the bytes received in an in-memory buffer. 
+  # Output refers to the process of writing data to external destinations.
+  buffer = io.BytesIO()
+  # a class in the Platypus library that can be used to create PDF documents
+  doc = SimpleDocTemplate(buffer, pagesize=letter)
+  # used to define the layout within the PDF being created
+  styles = getSampleStyleSheet()
+ 
+  # used to build the structure and data that will be contained within the PDF.
+  elements = []
     
 # Run the flask server
 if __name__ == "__main__":#
-    app.run()
+  app.run()
