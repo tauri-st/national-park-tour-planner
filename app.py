@@ -44,6 +44,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nature_nook.db'
 # when set to False, interactions with the database to add, update, and delete are not recorded which reduces the overhead
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Create the database object
+db = SQLAlchemy(app)
+
 #* Create instance of OpenAI class
 llm = ChatOpenAI(
   model="gpt-3.5-turbo",
