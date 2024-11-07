@@ -26,6 +26,7 @@ from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.tools import StructuredTool
 #gives access to LangChain Hub community contributed resources
 from langchain import hub
+from flask_sqlalchemy import SQLAlchemy
 
 # app will run at: http://127.0.0.1:5000/
 
