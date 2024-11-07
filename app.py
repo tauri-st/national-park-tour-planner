@@ -47,6 +47,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Create the database object
 db = SQLAlchemy(app)
 
+# Define the Park model
+class Park(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100), unique=True, nullable=False)
+  code = db.Column(db.String(10), unique=True, nullable=False)
+
 #* Create instance of OpenAI class
 llm = ChatOpenAI(
   model="gpt-3.5-turbo",
