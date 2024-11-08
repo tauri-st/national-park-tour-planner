@@ -58,6 +58,7 @@ class Park(db.Model):
 @app.cli.command("init-db")
 def init_db():
   db.create_all()
+  parks = get_parks()
 
 #* Fetch list of parks
 def get_parks():
