@@ -63,6 +63,12 @@ def init_db():
 def get_parks():
   """Fetches the entire list of national parks from the NPS API."""
   url = "https://developer.nps.gov/api/v1/parks"
+  params = {
+    "api_key": os.environ.get("NPS_API_KEY"),
+    "limit": 75, # Adjust this number based on the API's limit
+    "start": 0
+  }
+  parks = []
 
 #* Create instance of OpenAI class
 llm = ChatOpenAI(
