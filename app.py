@@ -53,6 +53,12 @@ class Park(db.Model):
   name = db.Column(db.String(100), unique=True, nullable=False)
   code = db.Column(db.String(10), unique=True, nullable=False)
 
+# Create a Flask CLI command for initializing the database
+# Run "flask init-db" from the command line to initialize the database
+@app.cli.command("init-db")
+def init_db():
+  db.create_all()
+
 #* Create instance of OpenAI class
 llm = ChatOpenAI(
   model="gpt-3.5-turbo",
