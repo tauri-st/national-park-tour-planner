@@ -59,6 +59,12 @@ class Park(db.Model):
 def init_db():
   db.create_all()
   parks = get_parks()
+  for park in parks:
+    # Check if park is already in database
+    existing_park = Park.query.filter_by(code=park["code"]).first()
+    if not existing_park:
+      new_park = Park(name=park["name"], code=park["code"])
+      db.session.add(new_park)
 
 #* Fetch list of parks
 def get_parks():
