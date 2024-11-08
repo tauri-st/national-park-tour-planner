@@ -103,14 +103,15 @@ llm = ChatOpenAI(
 def index():
     return render_template("index.html")
 
-#TODO: query the database to generate a list of parks
-#TODO: pass that list to the view file
 #TODO: use it to populate the dropdown options.
   
 # Define the route for the plan trip page
 @app.route("/plan_trip", methods=["GET"])
 def plan_trip():
-  return render_template("plan-trip.html")
+  """Renders the trip planning page."""
+  #query the database to generate a list of parks and pass that list to the view file
+  parks = Park.query.all()
+  return render_template("plan-trip.html", parks=parks)
 
 # Define the route for view trip page with the generated trip itinerary
 # For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
