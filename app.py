@@ -102,6 +102,10 @@ llm = ChatOpenAI(
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
+
+#TODO: query the database to generate a list of parks
+#TODO: pass that list to the view file
+#TODO: use it to populate the dropdown options.
   
 # Define the route for the plan trip page
 @app.route("/plan_trip", methods=["GET"])
