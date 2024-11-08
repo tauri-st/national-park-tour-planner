@@ -65,6 +65,8 @@ def init_db():
     if not existing_park:
       new_park = Park(name=park["name"], code=park["code"])
       db.session.add(new_park)
+  db.session.commit()
+  print("Database initialized!")
 
 #* Fetch list of parks
 def get_parks():
