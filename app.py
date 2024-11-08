@@ -69,6 +69,18 @@ def get_parks():
     "start": 0
   }
   parks = []
+  while True:
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+      data = response.json()
+      # extend adds name and code to the list
+      parks.extend([{"name": park["fullName"], "code": park["parkCode"]} for park in data["data"]])
+      if len(data["data"]) < params["limit"]:
+        break
+      params["start"] += params["limit"]
+    else:
+      break
+  return parks
 
 #* Create instance of OpenAI class
 llm = ChatOpenAI(
