@@ -70,6 +70,14 @@ class User(UserMixin, db.Model):
    username = db.Column(db.String(150), unique=True, nullable=False)
    password = db.Column(db.String(150), nullable=False)
 
+#* Authenticate user as they travel between pages
+# Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
+# this function gets the user’s id from the User table and returns it
+# Define the User loader
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
 @app.cli.command("init-db")
