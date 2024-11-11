@@ -35,11 +35,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 # app will run at: http://127.0.0.1:5000/
 
-# Initialize logging
+#* Initialize logging
 logging.basicConfig(filename="app.log", level=logging.INFO)
 log = logging.getLogger("app")
 
-# Initialize the Flask application
+#* Initialize the Flask application
 app = Flask(__name__)
 
 #* Set up the database
@@ -51,10 +51,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nature_nook.db'
 # when set to False, interactions with the database to add, update, and delete are not recorded which reduces the overhead
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Create the database object
+#* Create the database object
 db = SQLAlchemy(app)
+# create an instance of the LoginManager class
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
-# Define the Park model
+#* Define the Park model
 class Park(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100), unique=True, nullable=False)
