@@ -70,6 +70,25 @@ class User(UserMixin, db.Model):
    username = db.Column(db.String(150), unique=True, nullable=False)
    password = db.Column(db.String(150), nullable=False)
 
+#* Define the route for the login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  # If the request method is POST, the username and password the visitor entered are assigned to variables.
+  if request.method == 'POST':
+    username = request.form['username']
+    password = request.form['password']
+    # The entries in the User table are filtered for positive matches.
+    user = User.query.filter_by(username=username).first()
+    # If there is a successful match, the homepage is rendered.
+    if user and user.password == password:
+      login_user(user)
+      return redirect(url_for('index'))
+    # If not, the visitor will see a helpful message.
+    else:
+      flash('Login Unsuccessful. Please check username and password', 'danger')
+  # If no POST request is made, the login template file is rendered again.
+  return render_template('login.html')
+
 #* Authenticate user as they travel between pages
 # Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
 # this function gets the user’s id from the User table and returns it
