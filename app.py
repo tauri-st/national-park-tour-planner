@@ -1,4 +1,9 @@
-from flask import Flask, render_template, request, send_file
+# redirect used in routing the various pages of your application
+# url_for used to define the URLs used in routing
+# flash used to show messages to the visitor
+from flask import Flask, flash, render_template, request, redirect, url_for, send_file
+# handles the creation of accounts and the ability to log in and out
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import logging
 #Handles the steam of data for the PDF and places it temporarily into memory
 import io
