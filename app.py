@@ -43,8 +43,10 @@ log = logging.getLogger("app")
 app = Flask(__name__)
 
 #* Set up the database
-# SQLALCHEMY_DATABASE_URI sets a database connection URI
 # database accessed at sqlite:///nature_nook.db
+# secret key to manage user sessions
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", 'default-secret-key')
+# SQLALCHEMY_DATABASE_URI sets a database connection URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nature_nook.db'
 # when set to False, interactions with the database to add, update, and delete are not recorded which reduces the overhead
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
