@@ -89,6 +89,15 @@ def login():
   # If no POST request is made, the login template file is rendered again.
   return render_template('login.html')
 
+#* Define the route for logging out
+@app.route('/logout')
+# decorator is added to check that the user is logged in and is a valid user
+@login_required
+# If so, the logout function is run, logging the user out and routing to the login page
+def logout():
+   logout_user()
+   return redirect(url_for('login'))
+
 #* Authenticate user as they travel between pages
 # Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
 # this function gets the user’s id from the User table and returns it
