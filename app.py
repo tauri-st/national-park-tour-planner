@@ -164,14 +164,15 @@ llm = ChatOpenAI(
   max_tokens=4000
 )
 
-# Define the route for the home page
+#* Define the route for the home page
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    # Pass the user to each page in order to validate their authorization
+    return render_template("index.html", user=current_user)
 
 #TODO: use it to populate the dropdown options.
   
-# Define the route for the plan trip page
+#* Define the route for the plan trip page
 @app.route("/plan_trip", methods=["GET"])
 def plan_trip():
   """Renders the trip planning page."""
@@ -179,7 +180,7 @@ def plan_trip():
   parks = Park.query.all()
   return render_template("plan-trip.html", parks=parks)
 
-# Define the route for view trip page with the generated trip itinerary
+#* Define the route for view trip page with the generated trip itinerary
 # For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
 @app.route("/view_trip", methods=["POST"])
 def view_trip():
@@ -264,7 +265,7 @@ def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging,
     Respond only with a valid parseable JSON object representing the itinerary.
     """
 
-# Allows the agent to use the WikipediaQueryRun tool
+#* Allow the agent to use the WikipediaQueryRun tool
 def create_wikipedia_tool():
   """
   Creates a built-in langchain tool for querying Wikipedia.
