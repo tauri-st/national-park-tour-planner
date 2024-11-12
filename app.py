@@ -70,7 +70,7 @@ class User(UserMixin, db.Model):
    username = db.Column(db.String(150), unique=True, nullable=False)
    password = db.Column(db.String(150), nullable=False)
 
-#* Define the route for the login page
+#* Define the /login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   # If the request method is POST, the username and password the visitor entered are assigned to variables.
@@ -89,7 +89,7 @@ def login():
   # If no POST request is made, the login template file is rendered again.
   return render_template('login.html')
 
-#* Define the route for logging out
+#* Define the /logout route
 @app.route('/logout')
 # decorator is added to check that the user is logged in and is a valid user
 @login_required
@@ -105,6 +105,19 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
   return User.query.get(int(user_id))
+
+#* Define the /signup route
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+  if request.method == 'POST':
+    username = request.form['username']
+    password = request.form['password']
+    new_user = User(username=username, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    flash('Account created!', 'success')
+    return redirect(url_for('login'))
+  return render_template('signup.html')
 
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
