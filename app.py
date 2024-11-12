@@ -166,14 +166,15 @@ llm = ChatOpenAI(
 
 #* Define the route for the home page
 @app.route("/", methods=["GET"])
+@login_required
 def index():
     # Pass the user to each page in order to validate their authorization
     return render_template("index.html", user=current_user)
 
-#TODO: use it to populate the dropdown options.
   
 #* Define the route for the plan trip page
 @app.route("/plan_trip", methods=["GET"])
+@login_required
 def plan_trip():
   """Renders the trip planning page."""
   #query the database to generate a list of parks and pass that list to the view file
@@ -183,6 +184,7 @@ def plan_trip():
 #* Define the route for view trip page with the generated trip itinerary
 # For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
 @app.route("/view_trip", methods=["POST"])
+@login_required
 def view_trip():
   """Handles the form submission to view the generated trip itinerary."""
   # Extract form data
@@ -351,6 +353,7 @@ def create_nps_tool():
   return search_park_and_related_data
 
 @app.route("/download_pdf", methods=["POST"])
+@login_required
 def download_pdf():
   """Handles the PDF download of the generated trip itinerary."""
   #* Function scoped variables
