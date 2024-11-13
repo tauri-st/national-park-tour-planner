@@ -73,9 +73,9 @@ class Park(db.Model):
 
 #* Define the User model
 class User(UserMixin, db.Model):
-   id = db.Column(db.Integer, primary_key=True)
-   username = db.Column(db.String(150), unique=True, nullable=False)
-   password = db.Column(db.String(150), nullable=False)
+  id = db.Column(db.Integer, primary_key=True)
+  username = db.Column(db.String(150), unique=True, nullable=False)
+  password = db.Column(db.String(150), nullable=False)
 
 #* Authenticate user as they travel between pages
 # Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
@@ -126,6 +126,14 @@ def signup():
     return redirect(url_for('login'))
   return render_template('signup.html')
 
+#* Define the route for the home page
+@app.route("/", methods=["GET"])
+@login_required
+def index():
+    """Renders the main page."""
+    # Pass the user to each page in order to validate their authorization
+    return render_template("index.html", user=current_user)
+
 #* Define the route for the plan trip page
 @app.route("/plan_trip", methods=["GET"])
 @login_required
@@ -157,13 +165,6 @@ def get_parks():
     else:
       break
   return parks
-
-#* Define the route for the home page
-@app.route("/", methods=["GET"])
-@login_required
-def index():
-    # Pass the user to each page in order to validate their authorization
-    return render_template("index.html", user=current_user)
 
 #* Define the route for view trip page with the generated trip itinerary
 # For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
