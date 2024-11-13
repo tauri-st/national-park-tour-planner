@@ -126,6 +126,15 @@ def signup():
     return redirect(url_for('login'))
   return render_template('signup.html')
 
+#* Define the route for the plan trip page
+@app.route("/plan_trip", methods=["GET"])
+@login_required
+def plan_trip():
+  """Renders the trip planning page."""
+  #query the database to generate a list of parks and pass that list to the view file
+  parks = Park.query.all()
+  return render_template("plan-trip.html", parks=parks)
+
 #* Fetch list of parks
 def get_parks():
   """Fetches the entire list of national parks from the NPS API."""
@@ -155,16 +164,6 @@ def get_parks():
 def index():
     # Pass the user to each page in order to validate their authorization
     return render_template("index.html", user=current_user)
-
-  
-#* Define the route for the plan trip page
-@app.route("/plan_trip", methods=["GET"])
-@login_required
-def plan_trip():
-  """Renders the trip planning page."""
-  #query the database to generate a list of parks and pass that list to the view file
-  parks = Park.query.all()
-  return render_template("plan-trip.html", parks=parks)
 
 #* Define the route for view trip page with the generated trip itinerary
 # For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
