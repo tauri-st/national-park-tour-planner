@@ -42,6 +42,13 @@ log = logging.getLogger("app")
 #* Initialize the Flask application
 app = Flask(__name__)
 
+#* Create instance of OpenAI class
+llm = ChatOpenAI(
+  model="gpt-3.5-turbo",
+  temperature=0.5,
+  max_tokens=4000
+)
+
 #* Set up the database
 # database accessed at sqlite:///nature_nook.db
 # secret key to manage user sessions
@@ -70,6 +77,14 @@ class User(UserMixin, db.Model):
    username = db.Column(db.String(150), unique=True, nullable=False)
    password = db.Column(db.String(150), nullable=False)
 
+#* Authenticate user as they travel between pages
+# Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
+# this function gets the user’s id from the User table and returns it
+# Define the User loader
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
 #* Define the /login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -97,14 +112,6 @@ def login():
 def logout():
    logout_user()
    return redirect(url_for('login'))
-
-#* Authenticate user as they travel between pages
-# Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
-# this function gets the user’s id from the User table and returns it
-# Define the User loader
-@login_manager.user_loader
-def load_user(user_id):
-  return User.query.get(int(user_id))
 
 #* Define the /signup route
 @app.route('/signup', methods=['GET', 'POST'])
@@ -156,13 +163,6 @@ def get_parks():
     else:
       break
   return parks
-
-#* Create instance of OpenAI class
-llm = ChatOpenAI(
-  model="gpt-3.5-turbo",
-  temperature=0.5,
-  max_tokens=4000
-)
 
 #* Define the route for the home page
 @app.route("/", methods=["GET"])
