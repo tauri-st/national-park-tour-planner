@@ -126,21 +126,6 @@ def signup():
     return redirect(url_for('login'))
   return render_template('signup.html')
 
-#* Create a Flask CLI command for initializing the database
-# Run "flask init-db" from the command line to initialize the database
-@app.cli.command("init-db")
-def init_db():
-  db.create_all()
-  parks = get_parks()
-  for park in parks:
-    # Check if park is already in database
-    existing_park = Park.query.filter_by(code=park["code"]).first()
-    if not existing_park:
-      new_park = Park(name=park["name"], code=park["code"])
-      db.session.add(new_park)
-  db.session.commit()
-  print("Database initialized!")
-
 #* Fetch list of parks
 def get_parks():
   """Fetches the entire list of national parks from the NPS API."""
@@ -410,6 +395,21 @@ def download_pdf():
   buffer.seek(0)
   # called to return the file when the user clicks the “Export trip” button
   return send_file(buffer, as_attachment=True, download_name="itinerary.pdf", mimetype='application/pdf')
+
+#* Create a Flask CLI command for initializing the database
+# Run "flask init-db" from the command line to initialize the database
+@app.cli.command("init-db")
+def init_db():
+  db.create_all()
+  parks = get_parks()
+  for park in parks:
+    # Check if park is already in database
+    existing_park = Park.query.filter_by(code=park["code"]).first()
+    if not existing_park:
+      new_park = Park(name=park["name"], code=park["code"])
+      db.session.add(new_park)
+  db.session.commit()
+  print("Database initialized!")
 
 #* Run the flask server
 if __name__ == "__main__":#
