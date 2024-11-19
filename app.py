@@ -201,7 +201,7 @@ def view_trip():
   adventure = ", ".join(request.form.getlist("adventure"))
 
   # Call generate function and create the input string with the user's unique trip information
-  input_data = generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure)
+  input_data = generate_trip_input(location, trip_start_str, trip_end_str, traveling_with, lodging, adventure)
   print('input_data: \n', input_data, '\n')
 
   # Create a tool for the agent to use that utilizes Wikipedia's run function
