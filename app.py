@@ -192,8 +192,10 @@ def view_trip():
   """Handles the form submission to view the generated trip itinerary."""
   # Extract form data
   location = request.form["location-search"]
-  trip_start = request.form["trip-start"]
-  trip_end = request.form["trip-end"]
+  trip_start_str = request.form["trip-start"]
+  trip_end_str = request.form["trip-end"]
+  trip_start = datetime.strptime(trip_start_str, '%Y-%m-%d').date()
+  trip_end = datetime.strptime(trip_end_str, '%Y-%m-%d').date()
   traveling_with = ", ".join(request.form.getlist("traveling-with"))
   lodging = ", ".join(request.form.getlist("lodging"))
   adventure = ", ".join(request.form.getlist("adventure"))
