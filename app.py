@@ -206,7 +206,7 @@ def view_trip():
 
   log.info(response["output"])
   
-  return render_template("view-trip.html", output=response["output"])
+  return render_template("view-trip.html", output=response["output"], user=current_user)
 
 # inform the LLM what type of response we're looking for and how we want the response to be formatted
 # user's form responses will be used as arguments
