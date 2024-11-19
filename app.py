@@ -77,6 +77,24 @@ class User(UserMixin, db.Model):
   username = db.Column(db.String(150), unique=True, nullable=False)
   password = db.Column(db.String(150), nullable=False)
 
+#* Define the Trip model for the database
+class Trip(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  trip_name = db.Column(db.String(150), nullable=False)
+  location = db.Column(db.String(150), nullable=False)
+  trip_start = db.Column(db.Date, nullable=False)
+  trip_end = db.Column(db.Date, nullable=False)
+  traveling_with = db.Column(db.String(150), nullable=False)
+  lodging = db.Column(db.String(150), nullable=False)
+  adventure = db.Column(db.String(150), nullable=False)
+  created_at = db.Column(db.DateTime, default=datetime.utcnow)
+  typical_weather = db.Column(db.String(150), nullable=True)
+  itinerary = db.Column(db.Text, nullable=True)
+  important_things_to_know = db.Column(db.Text, nullable=True)
+ 
+  user = db.relationship('User', backref=db.backref('trips', lazy=True))
+
 #* Authenticate user as they travel between pages
 # Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
 # this function gets the user’s id from the User table and returns it
