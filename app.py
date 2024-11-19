@@ -199,9 +199,10 @@ def view_trip():
   traveling_with = ", ".join(request.form.getlist("traveling-with"))
   lodging = ", ".join(request.form.getlist("lodging"))
   adventure = ", ".join(request.form.getlist("adventure"))
+  trip_name = request.form["trip-name"]
 
   # Call generate function and create the input string with the user's unique trip information
-  input_data = generate_trip_input(location, trip_start_str, trip_end_str, traveling_with, lodging, adventure)
+  input_data = generate_trip_input(trip_name, location, trip_start_str, trip_end_str, traveling_with, lodging, adventure)
   print('input_data: \n', input_data, '\n')
 
   # Create a tool for the agent to use that utilizes Wikipedia's run function
@@ -225,6 +226,15 @@ def view_trip():
   response = agent_executor.invoke({"input": input_data})
 
   output = response["output"]
+
+  # Create a new trip to be added to the database
+  new_trip = Trip(user_id=current_user.id, trip_name=trip_name, location=location, trip_start=trip_start,
+    trip_end=trip_end, traveling_with=traveling_with, lodging=lodging, adventure=adventure,
+    typical_weather=output["typical_weather"], itinerary=json.dumps(output["itinerary"]),
+    important_things_to_know=output["important_things_to_know"])
+  db.session.add(new_trip)
+  db.session.commit()
+  trip = new_trip
 
   log.info(response["output"])
   
