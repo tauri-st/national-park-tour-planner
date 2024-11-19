@@ -224,6 +224,8 @@ def view_trip():
   # Invoke the agent with the input data
   response = agent_executor.invoke({"input": input_data})
 
+  output = response["output"]
+
   log.info(response["output"])
   
   return render_template("view-trip.html", output=response["output"], user=current_user)
