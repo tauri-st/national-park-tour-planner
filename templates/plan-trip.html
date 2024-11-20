@@ -44,7 +44,11 @@
   </div>
   <aside>
     <div class="form-content-wrapper">
-      <form id="trip-form" action="/view_trip" method="POST" onsubmit="showDrawer()" class="plan-trip-form">
+      <form id="trip-form" action="{{ url_for('view_trip', trip_id=trip.id if trip else None) }" method="POST" onsubmit="showDrawer()" class="plan-trip-form">
+        <!-- pass the trip.id along with the other form data when editing an existing trip -->
+        {% if trip %}
+          <input type="hidden" name="trip_id" value="{{ trip.id }}">
+        {% endif %}
         <div class="location">
           <label for="location-search" class="form-label">Where do you want to go?</label>
           <select id="location-search" name="location-search">
