@@ -67,91 +67,76 @@
         <fieldset>
           <legend>Who are you traveling with? <span class="legend-span">(multi-select)</span></legend>
           <label for="solo" class="custom-checkbox">
-            {% if trip and 'solo' in trip.traveling_with %}checked{% endif %}
-            <input type="checkbox" id="solo" name="traveling-with" value="solo" class="visually-hidden" />
+            <input type="checkbox" id="solo" name="traveling-with" value="solo" class="visually-hidden" {% if trip and 'solo' in trip.traveling_with %}checked{% endif %} />
             <span class="checkbox-label">Solo</span>
           </label>
           <label for="partner" class="custom-checkbox">
-            {% if trip and 'with one partner' in trip.traveling_with %}checked{% endif %}
             <input type="checkbox" id="partner" name="traveling-with" value="with one partner"
-              class="visually-hidden" />
+              class="visually-hidden" {% if trip and 'with one partner' in trip.traveling_with %}checked{% endif %} />
             <span class="checkbox-label">Partner</span>
           </label>
           <label for="group" class="custom-checkbox">
             {% if trip and 'in a group' in trip.traveling_with %}checked{% endif %}
-            <input type="checkbox" id="group" name="traveling-with" value="in a group" class="visually-hidden" />
+            <input type="checkbox" id="group" name="traveling-with" value="in a group" class="visually-hidden" {% if trip and 'in a group' in trip.traveling_with %}checked{% endif %} />
             <span class="checkbox-label">Group</span>
           </label>
           <label for="kids" class="custom-checkbox">
-            {% if trip and 'with kids' in trip.traveling_with %}checked{% endif %}
-            <input type="checkbox" id="kids" name="traveling-with" value="with kids" class="visually-hidden" />
+            <input type="checkbox" id="kids" name="traveling-with" value="with kids" class="visually-hidden" {% if trip and 'with kids' in trip.traveling_with %}checked{% endif %} />
             <span class="checkbox-label">Kids</span>
           </label>
         </fieldset>
         <fieldset>
           <legend>What type of lodging do you prefer? <span class="legend-span">(multi-select)</span></legend>
           <label for="hotels" class="custom-checkbox">
-            {% if trip and 'hotels' in trip.lodging %}checked{% endif %}
-            <input type="checkbox" id="hotels" name="lodging" value="hotels" class="visually-hidden" />
+            <input type="checkbox" id="hotels" name="lodging" value="hotels" class="visually-hidden" {% if trip and 'hotels' in trip.lodging %}checked{% endif %} />
             <span class="checkbox-label">Hotels</span>
           </label>
           <label for="lodges" class="custom-checkbox">
-            {% if trip and 'lodges' in trip.lodging %}checked{% endif %}
-            <input type="checkbox" id="lodges" name="lodging" value="lodges" class="visually-hidden" />
+            <input type="checkbox" id="lodges" name="lodging" value="lodges" class="visually-hidden" {% if trip and 'lodges' in trip.lodging %}checked{% endif %} />
             <span class="checkbox-label">Lodges</span>
           </label>
           <label for="campsites" class="custom-checkbox">
-            {% if trip and 'campsites' in trip.lodging %}checked{% endif %}
-            <input type="checkbox" id="campsites" name="lodging" value="campsites" class="visually-hidden" />
+            <input type="checkbox" id="campsites" name="lodging" value="campsites" class="visually-hidden" {% if trip and 'campsites' in trip.lodging %}checked{% endif %} />
             <span class="checkbox-label">Campsites</span>
           </label>
           <label for="bed-breakfast" class="custom-checkbox">
-            {% if trip and 'bed &amp; breakfasts' in trip.lodging %}checked{% endif %}
             <input type="checkbox" id="bed-breakfast" name="lodging" value="bed &amp; breakfasts"
-              class="visually-hidden" />
+              class="visually-hidden" {% if trip and 'bed &amp; breakfasts' in trip.lodging %}checked{% endif %} />
             <span class="checkbox-label">B&Bs</span>
           </label>
         </fieldset>
         <fieldset>
           <legend>What type of adventure do you prefer? <span class="legend-span">(multi-select)</span></legend>
           <label for="hiking" class="custom-checkbox">
-            {% if trip and 'hike' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="hiking" name="adventure" value="hike" class="visually-hidden" />
+            <input type="checkbox" id="hiking" name="adventure" value="hike" class="visually-hidden" {% if trip and 'hike' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Hiking</span>
           </label>
           <label for="tours" class="custom-checkbox">
-            {% if trip and 'go on guided tours' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="tours" name="adventure" value="go on guided tours" class="visually-hidden" />
+            <input type="checkbox" id="tours" name="adventure" value="go on guided tours" class="visually-hidden" {% if trip and 'go on guided tours' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Tours</span>
           </label>
           <label for="swimming" class="custom-checkbox">
-            {% if trip and 'swim' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="swimming" name="adventure" value="swim" class="visually-hidden" />
+            <input type="checkbox" id="swimming" name="adventure" value="swim" class="visually-hidden" {% if trip and 'swim' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Swimming</span>
           </label>
           <label for="canoeing" class="custom-checkbox">
-            {% if trip and 'canoe' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="canoeing" name="adventure" value="canoe" class="visually-hidden" />
+            <input type="checkbox" id="canoeing" name="adventure" value="canoe" class="visually-hidden" {% if trip and 'canoe' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Canoeing</span>
           </label>
           <label for="rafting" class="custom-checkbox">
-            {% if trip and 'raft' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="rafting" name="adventure" value="raft" class="visually-hidden" />
+            <input type="checkbox" id="rafting" name="adventure" value="raft" class="visually-hidden" {% if trip and 'raft' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Rafting</span>
           </label>
           <label for="cycling" class="custom-checkbox">
-            {% if trip and 'cycle' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="cycling" name="adventure" value="cycle" class="visually-hidden" />
+            <input type="checkbox" id="cycling" name="adventure" value="cycle" class="visually-hidden" {% if trip and 'cycle' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Cycling</span>
           </label>
           <label for="birding" class="custom-checkbox">
-            {% if trip and 'bird-watch' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="birding" name="adventure" value="bird-watch" class="visually-hidden" />
+            <input type="checkbox" id="birding" name="adventure" value="bird-watch" class="visually-hidden" {% if trip and 'bird-watch' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Birding</span>
           </label>
           <label for="climbing" class="custom-checkbox">
-            {% if trip and 'climb' in trip.adventure %}checked{% endif %}
-            <input type="checkbox" id="climbing" name="adventure" value="climb" class="visually-hidden" />
+            <input type="checkbox" id="climbing" name="adventure" value="climb" class="visually-hidden" {% if trip and 'climb' in trip.adventure %}checked{% endif %} />
             <span class="checkbox-label">Climbing</span>
           </label>
         </fieldset>
@@ -161,7 +146,11 @@
               name:</label>
             <input type="text" id="trip-name" name="trip-name" value="{{ trip.trip_name if trip else '' }}" placeholder="Spring break!">
           </div>
+          {% if trip %}
+          <button type="submit" class="btn">Update trip</button>
+          {% else %}
           <button type="submit" class="btn">Create trip</button>
+          {% endif %}
         </div>
       </form>
     </div>
