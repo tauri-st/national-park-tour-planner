@@ -153,10 +153,16 @@ def index():
     return render_template("index.html", user=current_user)
 
 #* Define the route for the plan trip page
-@app.route("/plan_trip", methods=["GET"])
+# If a trip exists, the fields will be pre-filled with the choices from the previously planned trip.
+@app.route("/plan_trip", methods=["GET", "POST"])
 @login_required
 def plan_trip():
   """Renders the trip planning page."""
+  trip_id = request.args.get('trip_id')
+  trip = None
+  # if a trip_id is available, query the Trip table using the trip ID and assign the data about the trip to the variable trip
+  if trip_id:
+    trip = Trip.query.get_or_404(trip_id)
   #query the database to generate a list of parks and pass that list to the view file
   parks = Park.query.all()
   return render_template("plan-trip.html", parks=parks, user=current_user)
