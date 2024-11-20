@@ -242,14 +242,14 @@ def view_trip():
 
 # inform the LLM what type of response we're looking for and how we want the response to be formatted
 # user's form responses will be used as arguments
-def generate_trip_input(location, trip_start, trip_end, traveling_with, lodging, adventure):
+def generate_trip_input(trip_name, location, trip_start_str, trip_end_str, traveling_with, lodging, adventure):
   """
   Generates a structured input string for the trip planning agent.
   """
   return f"""
     Create an itinerary for a trip to {location}.
-    The trip starts on: {trip_start}
-    The trip ends on: {trip_end}
+    The trip starts on: {trip_start_str}
+    The trip ends on: {trip_end_str}
     I will be traveling with {traveling_with}
     I would like to stay in {lodging}
     I would like to do the following activities: {adventure}
