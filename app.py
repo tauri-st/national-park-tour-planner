@@ -428,6 +428,15 @@ def download_pdf():
   # called to return the file when the user clicks the “Export trip” button
   return send_file(buffer, as_attachment=True, download_name="itinerary.pdf", mimetype='application/pdf')
 
+#* Route for fetch all trips added by user
+# query the Trip table in the database, filtering by the current user’s ID, to get all the saved trips and assign them to a variable
+@app.route("/my_trips", methods=["GET"])
+@login_required
+def my_trips():
+   """Renders the saved trips page."""
+   trips = Trip.query.filter_by(user_id=current_user.id).all()
+   return render_template("my-trips.html", trips=trips, user=current_user)
+
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
 @app.cli.command("init-db")
