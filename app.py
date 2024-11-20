@@ -440,7 +440,24 @@ def my_trips():
 #* Route to view a particular trip from saved trips
 # Query the Trip database using the trip_id and save the response to a variable named trip. Create a dictionary named output that holds the data for the trip.
 # The visitor will see the same view-trip page you’ve seen before with the specific trip associated with the trip_id
-
+@app.route("/view_trip/<int:trip_id>", methods=["GET"])
+@login_required
+def view_saved_trip(trip_id):
+  """Renders the detailed view for a saved trip."""
+  trip = Trip.query.get_or_404(trip_id)
+  output = {
+    "trip_name": trip.trip_name,
+    "location": trip.location,
+    "trip_start": trip.trip_start,
+    "trip_end": trip.trip_end,
+    "typical_weather": trip.typical_weather,
+    "traveling_with": trip.traveling_with,
+    "lodging": trip.lodging,
+    "adventure": trip.adventure,
+    "itinerary": json.loads(trip.itinerary) if trip.itinerary else [],
+    "important_things_to_know": trip.important_things_to_know
+  }
+  return render_template("view-trip.html", output=output, user=current_user, trip_id=trip.id)
 
 
 #* Create a Flask CLI command for initializing the database
