@@ -159,7 +159,7 @@
           <div class="trip-name">
             <label for="trip-name" class="form-label">Give your trip a unique
               name:</label>
-            <input type="text" id="trip-name" name="trip-name" placeholder="Spring break!">
+            <input type="text" id="trip-name" name="trip-name" value="{{ trip.trip_name if trip else '' }}" placeholder="Spring break!">
           </div>
           <button type="submit" class="btn">Create trip</button>
         </div>
