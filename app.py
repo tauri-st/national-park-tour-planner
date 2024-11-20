@@ -165,7 +165,7 @@ def plan_trip():
     trip = Trip.query.get_or_404(trip_id)
   #query the database to generate a list of parks and pass that list to the view file
   parks = Park.query.all()
-  return render_template("plan-trip.html", parks=parks, user=current_user)
+  return render_template("plan-trip.html", parks=parks, user=current_user, trip=trip)
 
 #* Fetch list of parks
 def get_parks():
