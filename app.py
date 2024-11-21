@@ -196,6 +196,8 @@ def get_parks():
 @login_required
 def view_trip():
   """Handles the form submission to view the generated trip itinerary."""
+  # Check for existing trip id in form data
+  trip_id = request.form.get('trip_id')
   # Extract form data
   location = request.form["location-search"]
   trip_start_str = request.form["trip-start"]
