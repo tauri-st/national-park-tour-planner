@@ -235,6 +235,23 @@ def view_trip():
 
   output = response["output"]
 
+  # Query the database for the existing trip or create a new one
+  existing_trip = Trip.query.get(trip_id) if trip_id else None
+ 
+  if existing_trip:
+    # Update the existing trip
+    existing_trip.location = location
+    existing_trip.trip_start = trip_start
+    existing_trip.trip_end = trip_end
+    existing_trip.traveling_with = traveling_with
+    existing_trip.lodging = lodging
+    existing_trip.adventure = adventure
+    existing_trip.typical_weather = output["typical_weather"]
+    existing_trip.itinerary = json.dumps(output["itinerary"])
+    existing_trip.important_things_to_know = output["important_things_to_know"]
+    db.session.commit()
+    trip = existing
+
   # Create a new trip to be added to the database
   new_trip = Trip(user_id=current_user.id, trip_name=trip_name, location=location, trip_start=trip_start,
     trip_end=trip_end, traveling_with=traveling_with, lodging=lodging, adventure=adventure,
