@@ -487,9 +487,13 @@ def view_saved_trip(trip_id):
 @app.route("/delete_trip/<int:trip_id>", methods=["POST"])
 @login_required
 def delete_trip(trip_id):
-   """Handles the deletion of a trip."""
+  """Handles the deletion of a trip."""
+  trip = Trip.query.get_or_404(trip_id)
+  # Make sure user has permission to delete the trip
+  if trip.user_id != current_user.id:
+    flash("You do not have permission to delete this trip.", "danger")
+    return redirect(url_for('my_trips'))
 
-   
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
 @app.cli.command("init-db")
