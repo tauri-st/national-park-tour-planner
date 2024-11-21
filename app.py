@@ -484,7 +484,12 @@ def view_saved_trip(trip_id):
   }
   return render_template("view-trip.html", output=output, user=current_user, trip_id=trip.id)
 
+@app.route("/delete_trip/<int:trip_id>", methods=["POST"])
+@login_required
+def delete_trip(trip_id):
+   """Handles the deletion of a trip."""
 
+   
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
 @app.cli.command("init-db")
