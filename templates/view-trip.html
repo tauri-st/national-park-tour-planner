@@ -55,7 +55,7 @@
           <button class="view-trip-btn" onclick="downloadPDF()" id="export-trip">
             <img src="../static/img/export-black.png" alt="file icon" class="icons" />Export trip
           </button>
-          <form action="" method="POST" class="view-trip-btn" id="delete-trip">
+          <form action="{{ url_for('delete_trip', trip_id=trip_id) }}" method="POST" class="view-trip-btn" id="delete-trip">
             <button type="submit">
               <img src="../static/img/x-black.png" alt="delete icon" class="icons" />Delete trip
             </button>
