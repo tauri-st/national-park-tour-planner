@@ -493,6 +493,12 @@ def delete_trip(trip_id):
   if trip.user_id != current_user.id:
     flash("You do not have permission to delete this trip.", "danger")
     return redirect(url_for('my_trips'))
+  
+  db.session.delete(trip)
+  db.session.commit()
+  flash("Trip deleted successfully.", "success")
+  log.info("Trip deleted: %s", flash)
+  return redirect(url_for('my_trips'))
 
 #* Create a Flask CLI command for initializing the database
 # Run "flask init-db" from the command line to initialize the database
