@@ -123,7 +123,6 @@ def login():
 @app.route('/logout')
 # decorator is added to check that the user is logged in and is a valid user
 @login_required
-# If so, the logout function is run, logging the user out and routing to the login page
 def logout():
    logout_user()
    return redirect(url_for('login'))
@@ -157,10 +156,8 @@ def plan_trip():
   """Renders the trip planning page."""
   trip_id = request.args.get('trip_id')
   trip = None
-  # if a trip_id is available, query the Trip table using the trip ID and assign the data about the trip to the variable trip
   if trip_id:
     trip = Trip.query.get_or_404(trip_id)
-  #query the database to generate a list of parks and pass that list to the view file
   parks = Park.query.all()
   return render_template("plan-trip.html", parks=parks, user=current_user, trip=trip)
 
@@ -188,7 +185,6 @@ def get_parks():
   return parks
 
 #* Define the route for view trip page with the generated trip itinerary
-# For refactor: no invoking the chain (since we’re using an agent instead of a chain.)
 @app.route("/view_trip", methods=["POST"])
 @login_required
 def view_trip():
@@ -206,25 +202,22 @@ def view_trip():
   adventure = ", ".join(request.form.getlist("adventure"))
   trip_name = request.form["trip-name"]
 
-  # Call generate function and create the input string with the user's unique trip information
   input_data = generate_trip_input(trip_name, location, trip_start_str, trip_end_str, traveling_with, lodging, adventure)
   print('input_data: \n', input_data, '\n')
 
-  # Create a tool for the agent to use that utilizes Wikipedia's run function
   wikipedia_tool = create_wikipedia_tool()
 
-  # Define and register a custom tool for retrieving data from the National Park Service API
+  # custom tool for retrieving data from the National Park Service API
   nps_tool = create_nps_tool()
 
-  # Pull a tool prompt template from the hub. View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
+  # View the template at https://smith.langchain.com/hub/hwchase17/react-chat-json
   prompt = hub.pull("hwchase17/react-chat-json")
 
-  # Create our agent that will utilize tools and return JSON
   agent = create_json_chat_agent(llm=llm, tools=[wikipedia_tool, nps_tool], prompt=prompt)
 
   # Create a runnable instance of the agent
-  # Included in the AgentExecutor you’ll add the ability to see an error if the LLM isn’t able to parse the response from different inputs: handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
-  # You’ll see the error message as part of the output in the command line.
+  # handle_parsing_errors(https://python.langchain.com/v0.1/docs/modules/agents/how_to/handle_parsing_errors/). 
+  # error message will be  part of the output in the command line.
   agent_executor = AgentExecutor(agent=agent, tools=[wikipedia_tool, nps_tool], verbose=True, handle_parsing_errors="The output from the LLM could not be parsed or is incomplete.")
  
   # Invoke the agent with the input data
@@ -262,8 +255,6 @@ def view_trip():
   
   return render_template("view-trip.html", output=output, user=current_user, trip_id=trip.id)
 
-# inform the LLM what type of response we're looking for and how we want the response to be formatted
-# user's form responses will be used as arguments
 def generate_trip_input(trip_name, location, trip_start_str, trip_end_str, traveling_with, lodging, adventure):
   """
   Generates a structured input string for the trip planning agent.
@@ -337,14 +328,13 @@ def create_nps_tool():
     return {"error": f"Failed to fetch data from {endpoint}, status code: {response.status_code}"}
   print(api_key)
 
-  # takes a park name as an argument and uses the fetch_data function to make an API call
   def search_parks_by_name(park_name):
     """
     Searches for parks by name.
     """
     return fetch_data("parks", {"q": park_name}).get("data", [])
 
-  # uses fuzzy search to search the list of parks returned by the search_parks_by_name() function and identify the one that most closely matches the park name
+  # use fuzzy search to search the list of parks returned by the search_parks_by_name() function and identify the one that most closely matches the park name
   def find_best_matching_park(park_name, parks):
     """
     Finds the best matching park using fuzzy search.
@@ -373,7 +363,6 @@ def create_nps_tool():
     """
     Searches for a park and finds related data.
     """
-    # strip method removes leading and trailing white spaces
     park_name = input.strip()
     parks = search_parks_by_name(park_name)
     if parks:
@@ -395,24 +384,18 @@ def create_nps_tool():
 @login_required
 def download_pdf():
   """Handles the PDF download of the generated trip itinerary."""
-  #* Function scoped variables
-  #holds the jsonified trip itinerary details
+  
   output = request.json
 
-  #work with streaming content. 
-  # io, or i/o, stands for input and output. 
-  # Input refers to the process of reading data from external sources, keeping the bytes received in an in-memory buffer. 
-  # Output refers to the process of writing data to external destinations.
   buffer = io.BytesIO()
   # a class in the Platypus library that can be used to create PDF documents
   doc = SimpleDocTemplate(buffer, pagesize=letter)
-  # used to define the layout within the PDF being created
+  # define the layout within the PDF being created
   styles = getSampleStyleSheet()
  
-  # used to build the structure and data that will be contained within the PDF.
+  # Create formatting for the PDF
   elements = []
 
-  #* Create formatting for the PDF
   elements.append(Paragraph(f"<b>Trip Name:</b> {output['trip_name']}", styles['Normal']))
   elements.append(Spacer(1, 12))
   elements.append(Paragraph(f"<b>Location:</b> {output['location']}", styles['Normal']))
@@ -442,7 +425,7 @@ def download_pdf():
  
   elements.append(Paragraph(f"<b>Important Things to Know:</b> {output['important_things_to_know']}", styles['Normal']))
 
-  #* Create the PDF
+  # Create the PDF
   doc.build(elements)
   
   # sets the reference point from where the read of the file will start to the beginning
@@ -451,7 +434,6 @@ def download_pdf():
   return send_file(buffer, as_attachment=True, download_name="itinerary.pdf", mimetype='application/pdf')
 
 #* Route to fetch all trips added by user
-# query the Trip table in the database, filtering by the current user’s ID, to get all the saved trips and assign them to a variable
 @app.route("/my_trips", methods=["GET"])
 @login_required
 def my_trips():
@@ -460,8 +442,6 @@ def my_trips():
   return render_template("my-trips.html", trips=trips, user=current_user)
 
 #* Route to view a particular trip from saved trips
-# Query the Trip database using the trip_id and save the response to a variable named trip. Create a dictionary named output that holds the data for the trip.
-# The visitor will see the same view-trip page you’ve seen before with the specific trip associated with the trip_id
 @app.route("/view_trip/<int:trip_id>", methods=["GET"])
 @login_required
 def view_saved_trip(trip_id):
@@ -486,6 +466,7 @@ def view_saved_trip(trip_id):
 def delete_trip(trip_id):
   """Handles the deletion of a trip."""
   trip = Trip.query.get_or_404(trip_id)
+  
   # Make sure user has permission to delete the trip
   if trip.user_id != current_user.id:
     flash("You do not have permission to delete this trip.", "danger")
