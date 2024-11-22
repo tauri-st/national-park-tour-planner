@@ -5,31 +5,34 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 # handles the creation of accounts and the ability to log in and out
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import logging
-#Handles the steam of data for the PDF and places it temporarily into memory
+# Handles the stream of data for the PDF and places it temporarily into memory
 import io
 from datetime import datetime
 from langchain_openai import ChatOpenAI
+
 # create a formatted PDF of the itinerary:
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 
-#Allows you to make a request to a web page
+# make a request to a web page
 import requests
 import json
-#Allows to call an agent into the code
-#Adding tool makes the custom tools you build available to the agent.
+# call an agent into the code
+# tool makes the custom tools you build available to the agent.
 from langchain.agents import create_json_chat_agent, AgentExecutor, tool
-#Enables you to compare two strings to be sure they match
+# compare two strings to be sure they match
 from fuzzywuzzy import fuzz, process
-# Allows you to access environmental variables so you can store your API key safely
+# access environmental variables to store the API key safely
 import os
-#These two APIs will be used with Wikipedia built-in tool which makes it easy to access and parse data from Wikipedia
+
+# These two APIs will be used with Wikipedia built-in tool which makes it easy to access and parse data from Wikipedia
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
-#Implements the Runnable Interface and wraps a function within code to let an agent easily work with it
+
+# Implements the Runnable Interface and wraps a function within code to let an agent easily work with it
 from langchain.tools import StructuredTool
-#gives access to LangChain Hub community contributed resources
+# gives access to LangChain Hub community contributed resources
 from langchain import hub
 from flask_sqlalchemy import SQLAlchemy
 
@@ -250,7 +253,7 @@ def view_trip():
     existing_trip.itinerary = json.dumps(output["itinerary"])
     existing_trip.important_things_to_know = output["important_things_to_know"]
     db.session.commit()
-    trip = existing
+    trip = existing_trip
   else:
     # Create a new trip to be added to the database
     new_trip = Trip(user_id=current_user.id, trip_name=trip_name, location=location, trip_start=trip_start,
