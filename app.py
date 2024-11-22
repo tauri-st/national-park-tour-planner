@@ -58,7 +58,7 @@ llm = ChatOpenAI(
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", 'default-secret-key')
 # SQLALCHEMY_DATABASE_URI sets a database connection URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nature_nook.db'
-# when set to False, interactions with the database to add, update, and delete are not recorded which reduces the overhead
+# when set to False, interactions with the database to add, update, and delete are not recorded. This reduces the overhead
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #* Create the database object
@@ -101,7 +101,6 @@ class Trip(db.Model):
 #* Authenticate user as they travel between pages
 # Flask-Login will authenticate the session token repeatedly as the visitor navigates to different pages and interacts with the database
 # this function gets the user’s id from the User table and returns it
-# Define the User loader
 @login_manager.user_loader
 def load_user(user_id):
   return User.query.get(int(user_id))
@@ -109,20 +108,15 @@ def load_user(user_id):
 #* Define the /login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-  # If the request method is POST, the username and password the visitor entered are assigned to variables.
   if request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
-    # The entries in the User table are filtered for positive matches.
     user = User.query.filter_by(username=username).first()
-    # If there is a successful match, the homepage is rendered.
     if user and user.password == password:
       login_user(user)
       return redirect(url_for('index'))
-    # If not, the visitor will see a helpful message.
     else:
       flash('Login Unsuccessful. Please check username and password', 'danger')
-  # If no POST request is made, the login template file is rendered again.
   return render_template('login.html')
 
 #* Define the /logout route
